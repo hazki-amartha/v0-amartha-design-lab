@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils"
 
 export function AppSidebar() {
   return (
-    <aside className="flex flex-col gap-6 p-4 w-[240px] shrink-0">
+    <aside className="flex flex-col gap-6 p-6 w-[240px] shrink-0">
       <div>
         <Image
           src="/logo.svg"
           alt="Amartha Design Lab"
-          width={140}
-          height={32}
+          width={174}
+          height={48}
           priority
         />
       </div>
