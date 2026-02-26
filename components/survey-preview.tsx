@@ -80,7 +80,7 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
         </div>
 
         {/* Iframe rendered directly */}
-        <div className="relative w-full bg-[#F3F6FD]" style={{ height: 640 }}>
+        <div className="relative w-full bg-[#F3F6FD]" style={{ height: 540 }}>
           {blobUrl && (
             <iframe
               key={iframeKey}
