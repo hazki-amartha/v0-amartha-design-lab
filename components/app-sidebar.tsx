@@ -1,15 +1,21 @@
 "use client"
 
+import * as React from "react"
+import Image from "next/image"
 import { FileCode2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function AppSidebar() {
   return (
-    <aside className="flex flex-col gap-8 p-6 w-[220px] shrink-0">
+    <aside className="flex flex-col gap-6 p-4 w-[240px] shrink-0">
       <div>
-        <h1 className="text-[17px] font-bold leading-tight tracking-tight text-foreground">
-          Amartha<br />Design Lab
-        </h1>
+        <Image
+          src="/logo.svg"
+          alt="Amartha Design Lab"
+          width={140}
+          height={32}
+          priority
+        />
       </div>
 
       <nav className="flex flex-col gap-1">
