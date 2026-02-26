@@ -94,9 +94,6 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
 
       {/* Actions card */}
       <div className="bg-card rounded-2xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground block mb-3">
-          Export
-        </span>
         <div className="flex flex-col gap-2.5">
           <button
             onClick={handleCopy}
