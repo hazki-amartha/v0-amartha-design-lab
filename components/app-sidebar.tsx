@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 export function AppSidebar() {
   return (
-    <aside className="flex flex-col gap-6 p-6 w-[240px] shrink-0">
+    <aside className="flex flex-col gap-6 p-6 w-[300px] shrink-0">
       <div>
         <Image
           src="/logo.svg"
@@ -19,7 +19,7 @@ export function AppSidebar() {
       </div>
 
       <nav className="flex flex-col gap-1">
-        <SidebarItem icon={FileCode2} label="Survey Creator" active />
+        <SidebarItem icon={ClipboardPlus} label="CSAT Survey Creator" active />
       </nav>
     </aside>
   )
@@ -37,7 +37,7 @@ function SidebarItem({
   return (
     <button
       className={cn(
-        "flex items-center gap-3 rounded-full px-4 py-2.5 text-[13px] font-medium transition-colors text-left",
+        "flex items-center gap-3 rounded-2 px-4 py-2.5 text-[15px] font-medium transition-colors text-left",
         active
           ? "bg-card text-foreground shadow-sm"
           : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
