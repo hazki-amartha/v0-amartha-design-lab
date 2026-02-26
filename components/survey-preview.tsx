@@ -47,9 +47,9 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Preview Device Frame */}
-      <div className="bg-card rounded-2xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col items-center">
-        <div className="flex items-center justify-between w-full mb-4">
+      {/* Preview Card */}
+      <div className="bg-card rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3">
           <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
             Live Preview
           </span>
@@ -62,38 +62,15 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
           </button>
         </div>
 
-        {/* Phone frame */}
-        <div
-          className="relative rounded-[28px] bg-[#1c1c1e] p-3 shadow-[0_8px_40px_rgba(0,0,0,0.16)]"
-          style={{ width: 280 }}
-        >
-          {/* Notch */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[96px] h-[24px] bg-[#1c1c1e] rounded-b-2xl z-10" />
-
-          {/* Screen */}
-          <div
-            className="rounded-[18px] overflow-hidden bg-[#F3F6FD]"
-            style={{ height: 560 }}
-          >
-            <iframe
-              key={iframeKey}
-              srcDoc={html}
-              title="Survey Preview"
-              className="w-full h-full border-0"
-              sandbox="allow-scripts allow-same-origin"
-              style={{
-                transform: "scale(0.52)",
-                transformOrigin: "top left",
-                width: "192.3%",
-                height: "192.3%",
-              }}
-            />
-          </div>
-
-          {/* Home indicator */}
-          <div className="flex justify-center mt-2">
-            <div className="w-[96px] h-[4px] rounded-full bg-[#48484a]" />
-          </div>
+        {/* Iframe rendered directly */}
+        <div className="relative w-full bg-[#F3F6FD]" style={{ height: 640 }}>
+          <iframe
+            key={iframeKey}
+            srcDoc={html}
+            title="Survey Preview"
+            className="absolute inset-0 w-full h-full border-0"
+            sandbox="allow-scripts allow-same-origin"
+          />
         </div>
       </div>
 
