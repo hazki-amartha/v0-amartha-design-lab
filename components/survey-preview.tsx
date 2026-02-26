@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { Copy, Download, Check, RotateCcw } from "lucide-react"
 
 interface SurveyPreviewProps {
@@ -8,20 +8,8 @@ interface SurveyPreviewProps {
 }
 
 export function SurveyPreview({ html }: SurveyPreviewProps) {
-  const iframeRef = useRef<HTMLIFrameElement>(null)
   const [copied, setCopied] = useState(false)
   const [iframeKey, setIframeKey] = useState(0)
-
-  useEffect(() => {
-    if (iframeRef.current) {
-      const doc = iframeRef.current.contentDocument
-      if (doc) {
-        doc.open()
-        doc.write(html)
-        doc.close()
-      }
-    }
-  }, [html, iframeKey])
 
   const handleCopy = async () => {
     try {
@@ -89,10 +77,10 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
           >
             <iframe
               key={iframeKey}
-              ref={iframeRef}
+              srcDoc={html}
               title="Survey Preview"
               className="w-full h-full border-0"
-              sandbox="allow-scripts"
+              sandbox="allow-scripts allow-same-origin"
               style={{
                 transform: "scale(0.52)",
                 transformOrigin: "top left",
