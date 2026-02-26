@@ -24,7 +24,7 @@ export function SurveyForm({ config, onChange }: SurveyFormProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-3">
       {/* Header card */}
       <div className="bg-card rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
         <h2 className="text-[22px] font-semibold tracking-tight text-card-foreground">
