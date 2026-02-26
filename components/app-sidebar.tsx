@@ -19,7 +19,7 @@ export function AppSidebar() {
       </div>
 
       <nav className="flex flex-col gap-1">
-        <SidebarItem icon={ClipboardPlus} label="CSAT Survey Creator" active />
+        <SidebarItem icon={file-plus-corner} label="CSAT Survey Creator" active />
       </nav>
     </aside>
   )
