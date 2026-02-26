@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Copy, Download, Check, RotateCcw } from "lucide-react"
 
 interface SurveyPreviewProps {
@@ -10,6 +10,23 @@ interface SurveyPreviewProps {
 export function SurveyPreview({ html }: SurveyPreviewProps) {
   const [copied, setCopied] = useState(false)
   const [iframeKey, setIframeKey] = useState(0)
+  const [blobUrl, setBlobUrl] = useState<string | null>(null)
+  const prevUrlRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    // Revoke previous blob URL to avoid memory leaks
+    if (prevUrlRef.current) {
+      URL.revokeObjectURL(prevUrlRef.current)
+    }
+    const blob = new Blob([html], { type: "text/html" })
+    const url = URL.createObjectURL(blob)
+    setBlobUrl(url)
+    prevUrlRef.current = url
+
+    return () => {
+      URL.revokeObjectURL(url)
+    }
+  }, [html, iframeKey])
 
   const handleCopy = async () => {
     try {
@@ -64,13 +81,14 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
 
         {/* Iframe rendered directly */}
         <div className="relative w-full bg-[#F3F6FD]" style={{ height: 640 }}>
-          <iframe
-            key={iframeKey}
-            srcDoc={html}
-            title="Survey Preview"
-            className="absolute inset-0 w-full h-full border-0"
-            sandbox="allow-scripts allow-same-origin"
-          />
+          {blobUrl && (
+            <iframe
+              key={iframeKey}
+              src={blobUrl}
+              title="Survey Preview"
+              className="absolute inset-0 w-full h-full border-0"
+            />
+          )}
         </div>
       </div>
 
