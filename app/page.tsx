@@ -19,7 +19,7 @@ export default function Page() {
       <AppSidebar />
 
       {/* Main content area */}
-      <main className="flex-1 flex gap-3 p-5 pl-0 min-h-screen">
+      <main className="flex-1 flex gap-2 p-3 pl-0 min-h-screen">
         {/* Form column */}
         <div className="flex-1 overflow-y-auto max-h-screen pr-1" style={{ scrollbarWidth: "none" }}>
           <SurveyForm config={config} onChange={setConfig} />

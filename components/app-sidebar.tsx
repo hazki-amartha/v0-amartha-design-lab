@@ -2,26 +2,28 @@
 
 import * as React from "react"
 import Image from "next/image"
-import { FileCode2 } from "lucide-react"
+import { FilePlus } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function AppSidebar() {
   return (
-    <aside className="flex flex-col gap-6 p-6 w-[300px] shrink-0">
-      <div>
-        <Image
-          src="/logo.svg"
-          alt="Amartha Design Lab"
-          width={174}
-          height={48}
-          priority
-        />
-      </div>
+    <aside className="flex flex-col p-3 w-[300px] shrink-0">
+      <div className="bg-border rounded-2xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-screen border border-muted-foreground/5">
+        <div className="mb-6">
+          <Image
+            src="/logo.svg"
+            alt="Amartha Design Lab"
+            width={174}
+            height={48}
+            priority
+          />
+        </div>
 
-      <nav className="flex flex-col gap-1">
-        <SidebarItem icon={FileCode2} label="Survey Creator" active />
-      </nav>
-    </aside>
+        <nav className="flex flex-col gap-1">
+          <SidebarItem icon={FilePlus} label="CSAT Survey Creator" active />
+        </nav>
+      </div>
+  </aside>
   )
 }
 
@@ -37,9 +39,9 @@ function SidebarItem({
   return (
     <button
       className={cn(
-        "flex items-center gap-3 rounded-full px-4 py-2.5 text-[13px] font-medium transition-colors text-left",
+        "flex items-center gap-3 rounded-md px-4 py-3 text-[14px] font-medium transition-colors text-left",
         active
-          ? "bg-card text-foreground shadow-sm"
+          ? "bg-primary text-primary-foreground shadow-sm"
           : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
       )}
     >
