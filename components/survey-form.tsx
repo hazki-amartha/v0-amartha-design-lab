@@ -6,9 +6,16 @@ import type { SurveyConfig, SurveyQuestion, SurveyMode } from "@/lib/survey-type
 interface SurveyFormProps {
   config: SurveyConfig
   onChange: (config: SurveyConfig) => void
+  surveyName: string
+  onNameChange: (name: string) => void
 }
 
-export function SurveyForm({ config, onChange }: SurveyFormProps) {
+export function SurveyForm({ 
+  config, 
+  onChange, 
+  surveyName, 
+  onNameChange 
+}: SurveyFormProps) {
   const updateMode = (mode: SurveyMode) => {
     onChange({ ...config, mode })
   }
@@ -25,34 +32,36 @@ export function SurveyForm({ config, onChange }: SurveyFormProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Header card */}
-      <div className="bg-card rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <h2 className="text-[22px] font-semibold tracking-tight text-card-foreground">
-          Create New CSAT Survey
-        </h2>
-        <p className="text-[13px] text-muted-foreground mt-1">
-          Configure your CleverTap in-app message survey
-        </p>
-      </div>
+      {/* Survey Configuration (Name & Type) */}
+      <div className="bg-card rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col gap-6">
+        <FieldGroup label="Survey Name">
+          <input
+            type="text"
+            value={surveyName}
+            onChange={(e) => onNameChange(e.target.value)}
+            placeholder="Enter survey name"
+            className="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-[13px] text-card-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-shadow"
+          />
+        </FieldGroup>
 
-      {/* Survey type selector */}
-      <div className="bg-card rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-          Survey Type
-        </label>
-        <div className="flex gap-3 mt-3">
-          <TypeButton
-            label="Single Survey"
-            description="2 steps"
-            active={config.mode === "2-step"}
-            onClick={() => updateMode("2-step")}
-          />
-          <TypeButton
-            label="Double Survey"
-            description="4 steps"
-            active={config.mode === "4-step"}
-            onClick={() => updateMode("4-step")}
-          />
+        <div>
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Survey Type
+          </label>
+          <div className="flex gap-3 mt-3">
+            <TypeButton
+              label="Single Survey"
+              description="2 steps"
+              active={config.mode === "2-step"}
+              onClick={() => updateMode("2-step")}
+            />
+            <TypeButton
+              label="Double Survey"
+              description="4 steps"
+              active={config.mode === "4-step"}
+              onClick={() => updateMode("4-step")}
+            />
+          </div>
         </div>
       </div>
 
@@ -191,7 +200,6 @@ function QuestionCard({
         <span className="text-[11px] text-muted-foreground">{subtitle}</span>
       </div>
 
-      {/* Context */}
       <FieldGroup label="Survey Context">
         <input
           type="text"
@@ -202,7 +210,6 @@ function QuestionCard({
         />
       </FieldGroup>
 
-      {/* Main question */}
       <FieldGroup label="Question Label">
         <input
           type="text"
@@ -213,7 +220,6 @@ function QuestionCard({
         />
       </FieldGroup>
 
-      {/* CSAT Answers */}
       <FieldGroup label="CSAT Answers">
         <div className="flex flex-col gap-2">
           {question.answers.map((ans, i) => (
@@ -251,7 +257,6 @@ function QuestionCard({
         </div>
       </FieldGroup>
 
-      {/* Follow-up: Dissatisfied */}
       <FollowupSection
         sentiment="Dissatisfied"
         sentimentNote="Score 1-4"
@@ -263,7 +268,6 @@ function QuestionCard({
         onRemoveOption={(i) => removeFollowupOption("dissatisfiedOptions", i)}
       />
 
-      {/* Follow-up: Delighted */}
       <FollowupSection
         sentiment="Delighted"
         sentimentNote="Score 5"

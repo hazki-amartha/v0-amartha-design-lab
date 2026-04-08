@@ -80,7 +80,7 @@ export function SurveyList() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">CSAT Surveys</h1>
         <Button onClick={handleCreateNew} className="gap-2">
           <Plus className="w-4 h-4" />
@@ -89,10 +89,11 @@ export function SurveyList() {
       </div>
 
       {surveys.length === 0 ? (
-        <div className="text-center py-12 bg-muted rounded-lg">
+        <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 text-center py-12">
           <p className="text-muted-foreground mb-4">No surveys yet</p>
-          <Button onClick={handleCreateNew} variant="outline">
-            Create your first survey
+          <Button onClick={handleCreateNew} className="gap-2" variant="outline">
+            <Plus className="w-4 h-4" />
+            Create New Survey
           </Button>
         </div>
       ) : (

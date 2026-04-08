@@ -148,30 +148,18 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
       <AppSidebar />
 
-      {/* Main content area */}
-      <main className="flex-1 flex flex-col gap-2 p-3 pl-0 min-h-screen">
-        {/* Top bar with survey name and actions */}
-        <div className="bg-card rounded-lg shadow-sm p-4 flex items-end gap-3">
-          <div className="flex-1">
-            <label className="text-xs font-semibold uppercase text-muted-foreground">
-              Survey Name
-            </label>
-            <Input
-              value={surveyName}
-              onChange={(e) => setSurveyName(e.target.value)}
-              placeholder="Enter survey name"
-              className="mt-2"
-            />
-          </div>
+      <main className="flex-1 flex flex-col gap-3 p-3 pl-0 min-h-screen">
+        {/* Top Bar */}
+        <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between">
+          <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">
+            {surveyId ? "Edit Survey" : "New Survey"}
+          </h1>
+          
           <div className="flex gap-2">
-            <Button
-              onClick={() => router.push("/surveys")}
-              variant="outline"
-            >
-              Back
+            <Button onClick={() => router.push("/surveys")} variant="outline">
+              Cancel
             </Button>
             {surveyId && (
               <Button onClick={handleDelete} variant="destructive">
@@ -186,19 +174,17 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
 
         {/* Form and preview */}
         <div className="flex gap-2 flex-1 overflow-hidden">
-          {/* Form column */}
-          <div
-            className="flex-1 overflow-y-auto pr-1"
-            style={{ scrollbarWidth: "none" }}
-          >
-            <SurveyForm config={config} onChange={setConfig} />
+          <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: "none" }}>
+            {/* Pass name and setter here */}
+            <SurveyForm 
+              config={config} 
+              onChange={setConfig} 
+              surveyName={surveyName}
+              onNameChange={setSurveyName}
+            />
           </div>
 
-          {/* Preview column */}
-          <div
-            className="w-[320px] shrink-0 overflow-y-auto"
-            style={{ scrollbarWidth: "none" }}
-          >
+          <div className="w-[320px] shrink-0 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
             <SurveyPreview html={html} />
           </div>
         </div>

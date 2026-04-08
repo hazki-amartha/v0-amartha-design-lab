@@ -10,7 +10,7 @@ export default function SurveysPage() {
       <AppSidebar />
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto p-8">
+      <main className="flex-1 flex flex-col gap-3 p-3 pl-0 min-h-screen">
         <SurveyList />
       </main>
     </div>
