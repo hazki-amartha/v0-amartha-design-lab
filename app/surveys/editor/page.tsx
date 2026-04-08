@@ -32,12 +32,15 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
     // Load search params in client-side effect
     const loadParams = async () => {
       const params = await searchParams;
+      console.log("[v0] Editor searchParams:", params);
       if (params.id) {
+        console.log("[v0] Found survey ID:", params.id);
         setSurveyId(params.id);
         // Ensure we trigger the fetch by setting loading to true here
         setLoading(true);
       } else {
         // If no ID, we are in "Create" mode
+        console.log("[v0] No survey ID - in create mode");
         setParamsLoaded(true);
         setLoading(false);
       }
@@ -53,9 +56,11 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
 
   const fetchSurvey = async (id: string) => {
     try {
+      console.log("[v0] Fetching survey with ID:", id);
       const response = await fetch(`/api/surveys/${id}`)
       if (!response.ok) throw new Error("Failed to fetch")
       const survey = await response.json()
+      console.log("[v0] Fetched survey:", survey);
       setConfig(survey.config)
       setSurveyName(survey.name)
       setParamsLoaded(true)
