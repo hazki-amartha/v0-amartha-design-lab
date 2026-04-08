@@ -32,10 +32,13 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
     // Load search params in client-side effect
     const loadParams = async () => {
       const params = await searchParams
+      console.log("[v0] Loaded search params:", params)
       if (params.id) {
+        console.log("[v0] Setting survey ID:", params.id)
         setSurveyId(params.id)
         setLoading(true)
       } else {
+        console.log("[v0] No survey ID in params, creating new survey")
         setParamsLoaded(true)
       }
     }
@@ -43,6 +46,7 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
   }, [searchParams])
 
   useEffect(() => {
+    console.log("[v0] Effect triggered - surveyId:", surveyId, "loading:", loading)
     if (surveyId && loading) {
       fetchSurvey(surveyId)
     }
@@ -50,14 +54,16 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
 
   const fetchSurvey = async (id: string) => {
     try {
+      console.log("[v0] Fetching survey:", id)
       const response = await fetch(`/api/surveys/${id}`)
       if (!response.ok) throw new Error("Failed to fetch")
       const survey = await response.json()
+      console.log("[v0] Fetched survey data:", survey)
       setConfig(survey.config)
       setSurveyName(survey.name)
       setParamsLoaded(true)
     } catch (error) {
-      console.error("Error fetching survey:", error)
+      console.error("[v0] Error fetching survey:", error)
       alert("Failed to load survey")
       setParamsLoaded(true)
     } finally {
