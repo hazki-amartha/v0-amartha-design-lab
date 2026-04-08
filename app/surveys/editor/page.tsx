@@ -137,7 +137,7 @@ function EditorContent() {
           <div className="flex gap-2">
             <Button onClick={() => router.push("/surveys")} variant="outline">Cancel</Button>
             {surveyId && <Button onClick={handleDelete} variant="destructive">Delete</Button>}
-            <Button onClick={handleSave} disabled={saving}>{saving ? "Saving..." : "Save"}</Button>
+            <Button onClick={handleSave} disabled={saving} variant="default">{saving ? "Saving..." : "Save"}</Button>
           </div>
         </div>
 

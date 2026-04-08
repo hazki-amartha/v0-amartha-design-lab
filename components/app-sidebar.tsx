@@ -1,43 +1,72 @@
 "use client"
 
 import * as React from "react"
+import { useState } from "react"
 import Image from "next/image"
-import { FilePlus } from "lucide-react"
+import { FilePlus, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter, usePathname } from "next/navigation"
 
 export function AppSidebar() {
   const router = useRouter()
   const pathname = usePathname()
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
-  // Helper to determine if a link is active
   const isSurveysActive = pathname.startsWith("/surveys")
 
   return (
-    /* h-screen and sticky keep it from moving when the middle content scrolls */
-    <aside className="sticky top-0 h-screen w-[300px] shrink-0 p-3 flex flex-col">
-      {/* Removed min-h-screen from here and used h-full. 
-         This ensures the background color/border spans the window height perfectly.
-      */}
-      <div className="bg-border rounded-2xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full border border-muted-foreground/5 overflow-y-auto">
+    <aside 
+      className={cn(
+        "sticky top-0 h-screen shrink-0 p-3 flex flex-col transition-all duration-300 ease-in-out",
+        isCollapsed ? "w-[90px]" : "w-[300px]"
+      )}
+    >
+      <div className="relative bg-border rounded-2xl py-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full border border-muted-foreground/5">
+
+        {/* LOGO & TOGGLE SECTION */}
         <div 
-          className="mb-6 cursor-pointer" 
-          onClick={() => router.push("/surveys")}
+          className={cn(
+            "h-[60px] mb-6 px-4 flex items-center transition-all duration-300",
+            isCollapsed ? "justify-center" : "justify-between"
+          )}
         >
-          <Image
-            src="/logo.svg"
-            alt="Amartha Design Lab"
-            width={174}
-            height={48}
-            priority
-          />
+          {/* Logo - Only rendered when expanded */}
+          {!isCollapsed && (
+            <div 
+              className="cursor-pointer animate-in fade-in duration-300"
+              onClick={() => router.push("/surveys")}
+            >
+              <Image
+                src="/logo.svg"
+                alt="Amartha Design Lab"
+                width={174}
+                height={48}
+                priority
+                className="object-contain"
+              />
+            </div>
+          )}
+
+          {/* Toggle Button */}
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="border border-primary/10 rounded-sm p-1.5 hover:bg-secondary transition-colors z-20 flex items-center justify-center"
+          >
+            {isCollapsed ? (
+              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            ) : (
+              <ChevronLeft className="h-5 w-5 text-muted-foreground" />
+            )}
+          </button>
         </div>
 
-        <nav className="flex flex-col gap-1">
+        {/* Navigation */}
+        <nav className="flex flex-col gap-2 px-4 items-center">
           <SidebarItem 
             icon={FilePlus} 
             label="CSAT Survey" 
             active={isSurveysActive}
+            isCollapsed={isCollapsed}
             onClick={() => router.push("/surveys")}
           />
         </nav>
@@ -50,25 +79,33 @@ function SidebarItem({
   icon: Icon,
   label,
   active = false,
+  isCollapsed,
   onClick,
 }: {
   icon: React.ComponentType<{ className?: string }>
   label: string
   active?: boolean
+  isCollapsed: boolean
   onClick: () => void
 }) {
   return (
     <button
       onClick={onClick}
+      title={isCollapsed ? label : ""}
       className={cn(
-        "flex items-center gap-3 rounded-xl px-4 py-3 text-[13px] font-semibold transition-all text-left",
+        "flex items-center rounded-sm transition-all duration-200 text-left w-full",
+        isCollapsed ? "justify-center p-3 w-11" : "gap-3 px-4 py-3",
         active
-          ? "bg-[#1A1A1A] text-white shadow-md" // Matching your screenshot's dark active state
+          ? "bg-[#1A1A1A] text-white shadow-md"
           : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
       )}
     >
-      <Icon className="h-4 w-4 shrink-0" />
-      <span>{label}</span>
+      <Icon className="h-5 w-5 shrink-0" />
+      {!isCollapsed && (
+        <span className="text-[13px] font-semibold whitespace-nowrap opacity-100 transition-opacity duration-300">
+          {label}
+        </span>
+      )}
     </button>
   )
 }
