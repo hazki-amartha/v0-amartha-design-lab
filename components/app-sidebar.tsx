@@ -21,7 +21,7 @@ export function AppSidebar() {
         isCollapsed ? "w-[90px]" : "w-[300px]"
       )}
     >
-      <div className="relative bg-border rounded-2xl py-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full border border-muted-foreground/5">
+      <div className="relative bg-border rounded-2xl py-3 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full border border-muted-foreground/5">
 
         {/* LOGO & TOGGLE SECTION */}
         <div 

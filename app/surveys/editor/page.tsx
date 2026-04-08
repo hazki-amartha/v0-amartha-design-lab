@@ -9,6 +9,7 @@ import { generateSurveyHtml } from "@/lib/generate-html"
 import { getDefaultConfig } from "@/lib/survey-types"
 import type { SurveyConfig } from "@/lib/survey-types"
 import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
 
 // Force dynamic ensures the server doesn't cache a blank version of the page
 export const dynamic = "force-dynamic"
@@ -131,13 +132,35 @@ function EditorContent() {
         
         {/* FIXED HEADER: shrink-0 prevents it from collapsing */}
         <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between mb-3 shrink-0">
-          <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">
-            {surveyId ? "Edit Survey" : "New Survey"}
-          </h1>
+          <div className="flex items-center gap-2">
+            {/* Back Arrow Button */}
+            <button 
+              onClick={() => router.push("/surveys")}
+              className="p-2 -ml-2 rounded-sm hover:bg-secondary transition-colors text-muted-foreground hover:text-card-foreground group"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-5 w-5 transition-transform" />
+            </button>
+            
+            <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">
+              {surveyId ? "Edit Survey" : "New Survey"}
+            </h1>
+          </div>
+
           <div className="flex gap-2">
-            <Button onClick={() => router.push("/surveys")} variant="outline">Cancel</Button>
-            {surveyId && <Button onClick={handleDelete} variant="destructive">Delete</Button>}
-            <Button onClick={handleSave} disabled={saving} variant="default">{saving ? "Saving..." : "Save"}</Button>
+            {surveyId && (
+              <Button onClick={handleDelete} variant="destructive">
+                Delete
+              </Button>
+            )}
+            <Button 
+              onClick={handleSave} 
+              disabled={saving} 
+              variant="default"
+              className="px-8"
+            >
+              {saving ? "Saving..." : "Save"}
+            </Button>
           </div>
         </div>
 
