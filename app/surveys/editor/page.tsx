@@ -98,14 +98,18 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
         })
       }
 
-      if (!response.ok) throw new Error("Failed to save")
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || `HTTP ${response.status}`)
+      }
 
       const savedSurvey = await response.json()
+      console.log("[v0] Saved survey response:", savedSurvey)
       alert(`Survey saved successfully!`)
       router.push(`/surveys/editor?id=${savedSurvey.id}`)
     } catch (error) {
-      console.error("Error saving survey:", error)
-      alert("Failed to save survey")
+      console.error("[v0] Error saving survey:", error)
+      alert(`Failed to save survey: ${error instanceof Error ? error.message : "Unknown error"}`)
     } finally {
       setSaving(false)
     }
