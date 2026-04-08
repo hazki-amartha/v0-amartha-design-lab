@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SurveyForm } from "@/components/survey-form"
 import { SurveyPreview } from "@/components/survey-preview"
@@ -12,23 +12,41 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useMemo } from "react"
 
-export default function EditorPage() {
+interface EditorPageProps {
+  searchParams: Promise<{ id?: string }>
+}
+
+export default function EditorPage({ searchParams }: EditorPageProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const surveyId = searchParams.get("id")
+  const [surveyId, setSurveyId] = useState<string | null>(null)
+  const [paramsLoaded, setParamsLoaded] = useState(false)
 
   const [config, setConfig] = useState<SurveyConfig>(getDefaultConfig())
   const [surveyName, setSurveyName] = useState("")
-  const [loading, setLoading] = useState(!!surveyId)
+  const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
 
   const html = useMemo(() => generateSurveyHtml(config), [config])
 
   useEffect(() => {
-    if (surveyId) {
+    // Load search params in client-side effect
+    const loadParams = async () => {
+      const params = await searchParams
+      if (params.id) {
+        setSurveyId(params.id)
+        setLoading(true)
+      } else {
+        setParamsLoaded(true)
+      }
+    }
+    loadParams()
+  }, [searchParams])
+
+  useEffect(() => {
+    if (surveyId && loading) {
       fetchSurvey(surveyId)
     }
-  }, [surveyId])
+  }, [surveyId, loading])
 
   const fetchSurvey = async (id: string) => {
     try {
@@ -37,9 +55,11 @@ export default function EditorPage() {
       const survey = await response.json()
       setConfig(survey.config)
       setSurveyName(survey.name)
+      setParamsLoaded(true)
     } catch (error) {
       console.error("Error fetching survey:", error)
       alert("Failed to load survey")
+      setParamsLoaded(true)
     } finally {
       setLoading(false)
     }
@@ -111,12 +131,12 @@ export default function EditorPage() {
     }
   }
 
-  if (loading) {
+  if (!paramsLoaded) {
     return (
       <div className="flex min-h-screen bg-background">
         <AppSidebar />
         <main className="flex-1 flex items-center justify-center">
-          <div>Loading survey...</div>
+          <div>Loading...</div>
         </main>
       </div>
     )
