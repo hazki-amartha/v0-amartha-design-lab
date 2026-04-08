@@ -4,12 +4,26 @@ import * as React from "react"
 import Image from "next/image"
 import { FilePlus } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useRouter, usePathname } from "next/navigation"
 
 export function AppSidebar() {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  // Helper to determine if a link is active
+  const isSurveysActive = pathname.startsWith("/surveys")
+
   return (
-    <aside className="flex flex-col p-3 w-[300px] shrink-0">
-      <div className="bg-border rounded-2xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-screen border border-muted-foreground/5">
-        <div className="mb-6">
+    /* h-screen and sticky keep it from moving when the middle content scrolls */
+    <aside className="sticky top-0 h-screen w-[300px] shrink-0 p-3 flex flex-col">
+      {/* Removed min-h-screen from here and used h-full. 
+         This ensures the background color/border spans the window height perfectly.
+      */}
+      <div className="bg-border rounded-2xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full border border-muted-foreground/5 overflow-y-auto">
+        <div 
+          className="mb-6 cursor-pointer" 
+          onClick={() => router.push("/surveys")}
+        >
           <Image
             src="/logo.svg"
             alt="Amartha Design Lab"
@@ -20,10 +34,15 @@ export function AppSidebar() {
         </div>
 
         <nav className="flex flex-col gap-1">
-          <SidebarItem icon={FilePlus} label="CSAT Survey Creator" active />
+          <SidebarItem 
+            icon={FilePlus} 
+            label="CSAT Survey" 
+            active={isSurveysActive}
+            onClick={() => router.push("/surveys")}
+          />
         </nav>
       </div>
-  </aside>
+    </aside>
   )
 }
 
@@ -31,17 +50,20 @@ function SidebarItem({
   icon: Icon,
   label,
   active = false,
+  onClick,
 }: {
   icon: React.ComponentType<{ className?: string }>
   label: string
   active?: boolean
+  onClick: () => void
 }) {
   return (
     <button
+      onClick={onClick}
       className={cn(
-        "flex items-center gap-3 rounded-md px-4 py-3 text-[14px] font-medium transition-colors text-left",
+        "flex items-center gap-3 rounded-xl px-4 py-3 text-[13px] font-semibold transition-all text-left",
         active
-          ? "bg-primary text-primary-foreground shadow-sm"
+          ? "bg-[#1A1A1A] text-white shadow-md" // Matching your screenshot's dark active state
           : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
       )}
     >

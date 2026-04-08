@@ -78,7 +78,7 @@ export function SurveyList() {
     <div className="space-y-4">
       {/* Top Header Card - Stays visible during loading */}
       <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-card-foreground">CSAT Surveys</h1>
+        <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">CSAT Surveys</h1>
         <Button onClick={handleCreateNew} className="gap-2">
           <Plus className="w-4 h-4" />
           Create New Survey

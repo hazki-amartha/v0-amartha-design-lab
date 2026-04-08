@@ -123,10 +123,14 @@ function EditorContent() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
+    // h-screen and overflow-hidden here lock the viewport
+    <div className="flex h-screen w-full overflow-hidden bg-background">
       <AppSidebar />
-      <main className="flex-1 flex flex-col gap-3 p-3 pl-0 min-h-screen">
-        <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between">
+
+      <main className="flex flex-1 flex-col p-3 pl-0 h-full overflow-hidden">
+        
+        {/* FIXED HEADER: shrink-0 prevents it from collapsing */}
+        <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between mb-3 shrink-0">
           <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">
             {surveyId ? "Edit Survey" : "New Survey"}
           </h1>
@@ -136,7 +140,10 @@ function EditorContent() {
             <Button onClick={handleSave} disabled={saving}>{saving ? "Saving..." : "Save"}</Button>
           </div>
         </div>
+
+        {/* SCROLLABLE CONTENT AREA */}
         <div className="flex gap-2 flex-1 overflow-hidden">
+          {/* Form column scrolls independently */}
           <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: "none" }}>
             <SurveyForm 
                config={config} 
@@ -145,6 +152,8 @@ function EditorContent() {
                onNameChange={setSurveyName} 
             />
           </div>
+
+          {/* Preview column scrolls independently */}
           <div className="w-[320px] shrink-0 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
             <SurveyPreview html={html} />
           </div>
