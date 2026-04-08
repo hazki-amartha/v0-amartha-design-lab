@@ -97,7 +97,7 @@ export function SurveyList() {
           </Button>
         </div>
       ) : (
-        <div className="border rounded-lg overflow-hidden">
+        <div className="bg-card rounded-lgshadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow>
