@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Trash2, Edit2, Plus } from "lucide-react"
+import { Trash2, Edit2, Plus, Loader2 } from "lucide-react"
 
 interface Survey {
   id: string
@@ -74,37 +74,40 @@ export function SurveyList() {
     })
   }
 
-  if (loading) {
-    return <div className="text-center py-8">Loading surveys...</div>
-  }
-
   return (
     <div className="space-y-4">
+      {/* Top Header Card - Stays visible during loading */}
       <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">CSAT Surveys</h1>
+        <h1 className="text-2xl font-bold text-card-foreground">CSAT Surveys</h1>
         <Button onClick={handleCreateNew} className="gap-2">
           <Plus className="w-4 h-4" />
           Create New Survey
         </Button>
       </div>
 
-      {surveys.length === 0 ? (
-        <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 text-center py-12">
-          <p className="text-muted-foreground mb-4">No surveys yet</p>
-          <Button onClick={handleCreateNew} className="gap-2" variant="outline">
-            <Plus className="w-4 h-4" />
-            Create New Survey
-          </Button>
-        </div>
-      ) : (
-        <div className="bg-card rounded-lgshadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      {/* Dynamic Content Area */}
+      <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">Loading surveys...</p>
+          </div>
+        ) : surveys.length === 0 ? (
+          <div className="p-6 text-center py-12">
+            <p className="text-muted-foreground mb-4">No surveys yet</p>
+            <Button onClick={handleCreateNew} className="gap-2" variant="outline">
+              <Plus className="w-4 h-4" />
+              Create New Survey
+            </Button>
+          </div>
+        ) : (
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Survey Name</TableHead>
                 <TableHead>Created</TableHead>
                 <TableHead>Last Modified</TableHead>
-                <TableHead className="w-24">Actions</TableHead>
+                <TableHead className="w-24 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -113,28 +116,32 @@ export function SurveyList() {
                   <TableCell className="font-medium">{survey.name}</TableCell>
                   <TableCell>{formatDate(survey.created_at)}</TableCell>
                   <TableCell>{formatDate(survey.updated_at)}</TableCell>
-                  <TableCell className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleEdit(survey.id)}
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleDelete(survey.id)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-1">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleEdit(survey.id)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleDelete(survey.id)}
+                        className="h-8 w-8 p-0 hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
