@@ -77,7 +77,7 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
       const payload = {
         name: surveyName,
         config,
-        generated_html: html,
+        html_output: html,
       }
 
       let response

@@ -42,7 +42,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, config, generated_html } = body;
+    const { name, config, html_output } = body;
 
     if (!config) {
       return NextResponse.json(
@@ -56,7 +56,7 @@ export async function PUT(
       .update({
         name,
         config,
-        generated_html,
+        html_output,
         updated_at: new Date().toISOString(),
       })
       .eq("id", id)

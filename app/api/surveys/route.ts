@@ -29,7 +29,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, config, generated_html } = body;
+    const { name, config, html_output } = body;
 
     if (!config) {
       return NextResponse.json(
@@ -47,16 +47,19 @@ export async function POST(request: NextRequest) {
         {
           name: surveyName,
           config,
-          generated_html,
+          html_output,
         },
       ])
       .select();
 
-    if (error) throw error;
+    if (error) {
+      console.error("[v0] Supabase error:", error);
+      throw error;
+    }
 
     return NextResponse.json(data[0], { status: 201 });
   } catch (error) {
-    console.error("Error creating survey:", error);
+    console.error("[v0] Error creating survey:", error);
     return NextResponse.json(
       { error: "Failed to create survey" },
       { status: 500 }
