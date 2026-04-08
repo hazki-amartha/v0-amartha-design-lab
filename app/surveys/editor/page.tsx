@@ -31,22 +31,25 @@ export default function EditorPage({ searchParams }: EditorPageProps) {
   useEffect(() => {
     // Load search params in client-side effect
     const loadParams = async () => {
-      const params = await searchParams
+      const params = await searchParams;
       if (params.id) {
-        setSurveyId(params.id)
-        setLoading(true)
+        setSurveyId(params.id);
+        // Ensure we trigger the fetch by setting loading to true here
+        setLoading(true);
       } else {
-        setParamsLoaded(true)
+        // If no ID, we are in "Create" mode
+        setParamsLoaded(true);
+        setLoading(false);
       }
-    }
-    loadParams()
-  }, [searchParams])
+    };
+    loadParams();
+  }, [searchParams]);
 
   useEffect(() => {
-    if (surveyId && loading) {
-      fetchSurvey(surveyId)
+    if (surveyId) {
+      fetchSurvey(surveyId);
     }
-  }, [surveyId, loading])
+  }, [surveyId]);
 
   const fetchSurvey = async (id: string) => {
     try {

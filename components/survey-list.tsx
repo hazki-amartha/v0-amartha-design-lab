@@ -113,7 +113,14 @@ export function SurveyList() {
             <TableBody>
               {surveys.map((survey) => (
                 <TableRow key={survey.id}>
-                  <TableCell className="font-medium">{survey.name}</TableCell>
+                  <TableCell className="font-medium px-6 py-4">
+                    <button
+                      onClick={() => handleEdit(survey.id)}
+                      className="hover:text-accent hover:underline transition-colors text-left font-semibold"
+                    >
+                      {survey.name}
+                    </button>
+                  </TableCell>
                   <TableCell>{formatDate(survey.created_at)}</TableCell>
                   <TableCell>{formatDate(survey.updated_at)}</TableCell>
                   <TableCell className="text-right">
