@@ -104,16 +104,16 @@ export function SurveyList() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Survey Name</TableHead>
+                <TableHead className="px-6 py-4">Survey Name</TableHead>
                 <TableHead>Created</TableHead>
                 <TableHead>Last Modified</TableHead>
-                <TableHead className="w-24 text-right">Actions</TableHead>
+                <TableHead className="px-6 w-24 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {surveys.map((survey) => (
                 <TableRow key={survey.id}>
-                  <TableCell className="font-medium px-6 py-4">
+                  <TableCell className="font-medium text-accent px-6 py-4">
                     <button
                       onClick={() => handleEdit(survey.id)}
                       className="hover:text-accent hover:underline transition-colors text-left font-semibold"
@@ -123,7 +123,7 @@ export function SurveyList() {
                   </TableCell>
                   <TableCell>{formatDate(survey.created_at)}</TableCell>
                   <TableCell>{formatDate(survey.updated_at)}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="px-6 text-right">
                     <div className="flex justify-end gap-1">
                       <Button
                         size="sm"
