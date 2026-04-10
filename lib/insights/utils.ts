@@ -1,5 +1,36 @@
 import { CSATRow, BUScorecard, FeatureDetail, FeedbackItem, FeatureScore } from './types';
 
+export function generateCSVTemplate(): string {
+  const headers = ['OS', 'trigger_event', 'business_unit', 'csat_category', 'detailed_feedback', 'csat_label', 'app_segments', 'Occurrences'];
+  const exampleRows = [
+    ['Android', 'CSAT Kirim Uang', 'Payments', 'delighted', 'Biaya transfer gratis, uang langsung masuk', 'Sangat puas', 'afin_active_borrowers', '1'],
+    ['iOS', 'CSAT Top-up Poket', 'Payments', 'satisfied', 'Proses transfer cepat', 'Puas', 'afin_promo_landing_page_rollout', '5'],
+    ['Android', 'CSAT Create Majelis', 'Lending', 'dissatisfied', 'Proses pembuatan majelis terlalu rumit', 'Tidak puas', 'afin_active_borrowers', '2'],
+  ];
+  
+  const csvContent = [
+    headers.join(','),
+    ...exampleRows.map(row => row.join(',')),
+  ].join('\n');
+  
+  return csvContent;
+}
+
+export function downloadCSVTemplate(): void {
+  const csv = generateCSVTemplate();
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'csat-template.csv');
+  link.style.visibility = 'hidden';
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 export function parseCSV(text: string): CSATRow[] {
   const lines = text.trim().split('\n');
   if (lines.length < 2) {
@@ -9,20 +40,28 @@ export function parseCSV(text: string): CSATRow[] {
   const headers = lines[0].split(',').map(h => h.trim());
   const rows: CSATRow[] = [];
 
+  // Map header indices for flexible parsing
+  const headerIndices: Record<string, number> = {};
+  headers.forEach((header, index) => {
+    headerIndices[header.toLowerCase()] = index;
+  });
+
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
 
     const values = line.split(',').map(v => v.trim());
+    
+    // Use header mapping to extract values flexibly
     const row: CSATRow = {
-      OS: values[0] || '',
-      csat_category: values[1] || '',
-      detailed_feedback: values[2] || '',
-      csat_label: values[3] || '',
-      trigger_event: values[4] || '',
-      business_unit: values[5] || '',
-      app_segments: values[6] || '',
-      Occurrences: parseInt(values[7] || '1', 10),
+      OS: values[headerIndices['os'] || 0] || '',
+      trigger_event: values[headerIndices['trigger_event'] || 1] || '',
+      business_unit: values[headerIndices['business_unit'] || 2] || '',
+      csat_category: values[headerIndices['csat_category'] || 3] || '',
+      detailed_feedback: values[headerIndices['detailed_feedback'] || 4] || '',
+      csat_label: values[headerIndices['csat_label'] || 5] || '',
+      app_segments: values[headerIndices['app_segments'] || 6] || '',
+      Occurrences: parseInt(values[headerIndices['occurrences'] || 7] || '1', 10),
     };
     rows.push(row);
   }
@@ -43,11 +82,12 @@ export function aggregateByBU(rows: CSATRow[]): BUScorecard[] {
     const count = row.Occurrences || 1;
     bu_data.total += count;
 
-    if (row.csat_label === 'Delighted') {
+    const category = (row.csat_category || '').toLowerCase();
+    if (category === 'delighted') {
       bu_data.delighted += count;
-    } else if (row.csat_label === 'Satisfied') {
+    } else if (category === 'satisfied') {
       bu_data.satisfied += count;
-    } else if (row.csat_label === 'Dissatisfied') {
+    } else if (category === 'dissatisfied') {
       bu_data.dissatisfied += count;
     }
   }
@@ -97,15 +137,16 @@ export function aggregateByFeature(
     const count = row.Occurrences || 1;
     feature_data.scores.total += count;
 
-    if (row.csat_label === 'Delighted') {
+    const category = (row.csat_category || '').toLowerCase();
+    if (category === 'delighted') {
       feature_data.scores.delighted += count;
       const feedback = row.detailed_feedback.trim();
       if (feedback) {
         feature_data.positive.set(feedback, (feature_data.positive.get(feedback) || 0) + count);
       }
-    } else if (row.csat_label === 'Satisfied') {
+    } else if (category === 'satisfied') {
       feature_data.scores.satisfied += count;
-    } else if (row.csat_label === 'Dissatisfied') {
+    } else if (category === 'dissatisfied') {
       feature_data.scores.dissatisfied += count;
       const feedback = row.detailed_feedback.trim();
       if (feedback) {
