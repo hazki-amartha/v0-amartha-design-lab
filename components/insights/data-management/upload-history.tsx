@@ -30,7 +30,7 @@ export default function UploadHistory({ months, onDelete }: UploadHistoryProps) 
         alert('Failed to delete data');
       }
     } catch (error) {
-      console.error('[v0] Delete error:', error);
+      console.error('Delete error:', error);
       alert('Failed to delete data');
     } finally {
       setDeleting(null);

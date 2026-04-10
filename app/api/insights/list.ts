@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       data: months,
     });
   } catch (error) {
-    console.error('[v0] List error:', error);
+    console.error('List error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to fetch months' },
       { status: 500 }
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       data,
     });
   } catch (error) {
-    console.error('[v0] Fetch error:', error);
+    console.error('Fetch error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to fetch data' },
       { status: 500 }
@@ -70,7 +70,7 @@ export async function DELETE(request: NextRequest) {
       message: `Deleted data for ${month}`,
     });
   } catch (error) {
-    console.error('[v0] Delete error:', error);
+    console.error('Delete error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to delete data' },
       { status: 500 }

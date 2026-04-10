@@ -53,7 +53,7 @@ export default function UploadPanel({ onUploadSuccess }: UploadPanelProps) {
         alert(`Upload failed: ${result.error}`);
       }
     } catch (error) {
-      console.error('[v0] Upload error:', error);
+      console.error('Upload error:', error);
       alert('Upload failed');
     } finally {
       setUploading(false);

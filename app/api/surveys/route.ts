@@ -1,11 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { SurveyConfig } from "@/lib/survey-types";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { supabase } from "@/lib/supabase";
 
 export async function GET() {
   try {
@@ -53,13 +48,13 @@ export async function POST(request: NextRequest) {
       .select();
 
     if (error) {
-      console.error("[v0] Supabase error:", error);
+      console.error("Supabase error:", error);
       throw error;
     }
 
     return NextResponse.json(data[0], { status: 201 });
   } catch (error) {
-    console.error("[v0] Error creating survey:", error);
+    console.error("Error creating survey:", error);
     return NextResponse.json(
       { error: "Failed to create survey" },
       { status: 500 }

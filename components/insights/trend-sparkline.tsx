@@ -1,31 +1,38 @@
 'use client';
 
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
-
 interface TrendSparklineProps {
   data?: number[];
 }
 
 export default function TrendSparkline({ data = [65, 70, 68, 75, 80, 78] }: TrendSparklineProps) {
-  const chartData = data.map((value, index) => ({
-    index,
-    value,
-  }));
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const width = 100;
+  const height = 48;
+  const padX = 4;
+  const padY = 4;
+
+  const points = data.map((v, i) => {
+    const x = padX + (i / (data.length - 1)) * (width - padX * 2);
+    const y = height - padY - ((v - min) / range) * (height - padY * 2);
+    return `${x},${y}`;
+  });
 
   return (
-    <div className="w-full h-12">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="hsl(var(--primary))"
-            dot={false}
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className="w-full h-12"
+      preserveAspectRatio="none"
+    >
+      <polyline
+        points={points.join(' ')}
+        fill="none"
+        stroke="hsl(var(--primary))"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

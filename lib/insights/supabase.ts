@@ -1,10 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 import { CSATRow, CSATDataRecord, MonthData } from './types';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 export async function uploadCSVData(
   month: string,
@@ -24,7 +19,7 @@ export async function uploadCSVData(
     .single();
 
   if (error) {
-    console.error('[v0] Supabase upload error:', error);
+    console.error('Supabase upload error:', error);
     throw new Error(`Failed to upload CSAT data: ${error.message}`);
   }
 
@@ -38,7 +33,7 @@ export async function listAllMonths(): Promise<MonthData[]> {
     .order('uploaded_at', { ascending: false });
 
   if (error) {
-    console.error('[v0] Supabase list error:', error);
+    console.error('Supabase list error:', error);
     throw new Error(`Failed to fetch months: ${error.message}`);
   }
 
@@ -59,7 +54,7 @@ export async function getMonthData(month: string): Promise<CSATDataRecord | null
 
   if (error && error.code !== 'PGRST116') {
     // PGRST116 is "no rows found" which is fine
-    console.error('[v0] Supabase fetch error:', error);
+    console.error('Supabase fetch error:', error);
     throw new Error(`Failed to fetch month data: ${error.message}`);
   }
 
@@ -73,7 +68,7 @@ export async function deleteMonthData(month: string): Promise<void> {
     .eq('month', month);
 
   if (error) {
-    console.error('[v0] Supabase delete error:', error);
+    console.error('Supabase delete error:', error);
     throw new Error(`Failed to delete month data: ${error.message}`);
   }
 }
