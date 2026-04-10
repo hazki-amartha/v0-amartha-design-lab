@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { AppSidebar } from "@/components/app-sidebar"
 import { SurveyForm } from "@/components/survey-form"
 import { SurveyPreview } from "@/components/survey-preview"
 import { generateSurveyHtml } from "@/lib/generate-html"
@@ -43,7 +42,6 @@ function EditorContent() {
       const response = await fetch(`/api/surveys/${id}`)
       if (!response.ok) throw new Error("Failed to fetch")
       const survey = await response.json()
-      
       setConfig(survey.config)
       setSurveyName(survey.name)
     } catch (error) {
@@ -55,7 +53,6 @@ function EditorContent() {
     }
   }
 
-  // FIXED: Moved inside the component scope
   const handleSave = async () => {
     if (!surveyName.trim()) {
       alert("Please enter a survey name")
@@ -65,7 +62,6 @@ function EditorContent() {
     try {
       setSaving(true)
       const payload = { name: surveyName, config, html_output: html }
-      
       const method = surveyId ? "PUT" : "POST"
       const url = surveyId ? `/api/surveys/${surveyId}` : "/api/surveys"
 
@@ -82,7 +78,7 @@ function EditorContent() {
 
       const savedSurvey = await response.json()
       alert(`Survey saved successfully!`)
-      
+
       if (!surveyId) {
         router.push(`/surveys/editor?id=${savedSurvey.id}`)
       }
@@ -94,7 +90,6 @@ function EditorContent() {
     }
   }
 
-  // FIXED: Moved inside the component scope
   const handleDelete = async () => {
     if (!surveyId || !confirm("Are you sure you want to delete this survey?")) return
 
@@ -111,87 +106,73 @@ function EditorContent() {
 
   if (!paramsLoaded || loading) {
     return (
-      <div className="flex min-h-screen bg-background">
-        <AppSidebar />
-        <main className="flex-1 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-2">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
-            <p className="text-sm text-muted-foreground">Loading survey editor...</p>
-          </div>
-        </main>
-      </div>
+      <main className="flex-1 flex items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center gap-2">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
+          <p className="text-sm text-muted-foreground">Loading survey editor...</p>
+        </div>
+      </main>
     )
   }
 
   return (
-    // h-screen and overflow-hidden here lock the viewport
-    <div className="flex h-screen w-full overflow-hidden bg-background">
-      <AppSidebar />
+    <main className="flex flex-1 flex-col p-3 pl-0 h-screen overflow-hidden">
+      {/* Header */}
+      <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between mb-3 shrink-0">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => router.push("/surveys")}
+            className="p-2 -ml-2 rounded-sm hover:bg-secondary transition-colors text-muted-foreground hover:text-card-foreground"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">
+            {surveyId ? "Edit Survey" : "New Survey"}
+          </h1>
+        </div>
 
-      <main className="flex flex-1 flex-col p-3 pl-0 h-full overflow-hidden">
-        
-        {/* FIXED HEADER: shrink-0 prevents it from collapsing */}
-        <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between mb-3 shrink-0">
-          <div className="flex items-center gap-2">
-            {/* Back Arrow Button */}
-            <button 
-              onClick={() => router.push("/surveys")}
-              className="p-2 -ml-2 rounded-sm hover:bg-secondary transition-colors text-muted-foreground hover:text-card-foreground group"
-              aria-label="Go back"
-            >
-              <ArrowLeft className="h-5 w-5 transition-transform" />
-            </button>
-            
-            <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">
-              {surveyId ? "Edit Survey" : "New Survey"}
-            </h1>
-          </div>
-
-          <div className="flex gap-2">
-            {surveyId && (
-              <Button onClick={handleDelete} variant="destructive">
-                Delete
-              </Button>
-            )}
-            <Button 
-              onClick={handleSave} 
-              disabled={saving} 
-              variant="default"
-              className="px-8"
-            >
-              {saving ? "Saving..." : "Save"}
+        <div className="flex gap-2">
+          {surveyId && (
+            <Button onClick={handleDelete} variant="destructive">
+              Delete
             </Button>
-          </div>
+          )}
+          <Button
+            onClick={handleSave}
+            disabled={saving}
+            variant="default"
+            className="px-8"
+          >
+            {saving ? "Saving..." : "Save"}
+          </Button>
         </div>
+      </div>
 
-        {/* SCROLLABLE CONTENT AREA */}
-        <div className="flex gap-2 flex-1 overflow-hidden">
-          {/* Form column scrolls independently */}
-          <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: "none" }}>
-            <SurveyForm 
-               config={config} 
-               onChange={setConfig} 
-               surveyName={surveyName} 
-               onNameChange={setSurveyName} 
-            />
-          </div>
-
-          {/* Preview column scrolls independently */}
-          <div className="w-[320px] shrink-0 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
-            <SurveyPreview html={html} />
-          </div>
+      {/* Scrollable content area */}
+      <div className="flex gap-2 flex-1 overflow-hidden">
+        <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: "none" }}>
+          <SurveyForm
+            config={config}
+            onChange={setConfig}
+            surveyName={surveyName}
+            onNameChange={setSurveyName}
+          />
         </div>
-      </main>
-    </div>
+        <div className="w-[320px] shrink-0 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+          <SurveyPreview html={html} />
+        </div>
+      </div>
+    </main>
   )
 }
 
 export default function EditorPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center">
+      <main className="flex-1 flex items-center justify-center min-h-screen">
         <p className="text-muted-foreground animate-pulse">Initializing...</p>
-      </div>
+      </main>
     }>
       <EditorContent />
     </Suspense>
