@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useState } from "react"
 import Image from "next/image"
-import { FilePlus, ChevronLeft, ChevronRight } from "lucide-react"
+import { FilePlus, ChevronLeft, ChevronRight, BarChart2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter, usePathname } from "next/navigation"
 
@@ -13,6 +13,7 @@ export function AppSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const isSurveysActive = pathname.startsWith("/surveys")
+  const isInsightsActive = pathname.startsWith("/insights")
 
   return (
     <aside 
@@ -69,6 +70,13 @@ export function AppSidebar() {
             isCollapsed={isCollapsed}
             onClick={() => router.push("/surveys")}
           />
+          <SidebarItem 
+            icon={BarChart2} 
+            label="User Insights" 
+            active={isInsightsActive}
+            isCollapsed={isCollapsed}
+            onClick={() => router.push("/insights")}
+          />
         </nav>
       </div>
     </aside>
@@ -88,14 +96,22 @@ function SidebarItem({
   isCollapsed: boolean
   onClick: () => void
 }) {
+  const [isNavigating, setIsNavigating] = React.useState(false)
+
+  const handleClick = () => {
+    setIsNavigating(true)
+    onClick()
+  }
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
+      disabled={isNavigating}
       title={isCollapsed ? label : ""}
       className={cn(
-        "flex items-center rounded-sm transition-all duration-200 text-left w-full",
+        "flex items-center rounded-sm transition-all duration-200 text-left w-full cursor-pointer",
         isCollapsed ? "justify-center p-3 w-11" : "gap-3 px-4 py-3",
-        active
+        active || isNavigating
           ? "bg-[#1A1A1A] text-white shadow-md"
           : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
       )}
