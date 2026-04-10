@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useState } from "react"
 import Image from "next/image"
-import { FilePlus, ChevronLeft, ChevronRight } from "lucide-react"
+import { FilePlus, ChevronLeft, ChevronRight, BarChart2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter, usePathname } from "next/navigation"
 
@@ -13,6 +13,7 @@ export function AppSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const isSurveysActive = pathname.startsWith("/surveys")
+  const isInsightsActive = pathname.startsWith("/insights")
 
   return (
     <aside 
@@ -68,6 +69,13 @@ export function AppSidebar() {
             active={isSurveysActive}
             isCollapsed={isCollapsed}
             onClick={() => router.push("/surveys")}
+          />
+          <SidebarItem 
+            icon={BarChart2} 
+            label="User Insights" 
+            active={isInsightsActive}
+            isCollapsed={isCollapsed}
+            onClick={() => router.push("/insights")}
           />
         </nav>
       </div>
