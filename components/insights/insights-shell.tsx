@@ -28,11 +28,7 @@ export default function InsightsShell({ months, onDataUpdated }: InsightsShellPr
   async function loadMonthData(month: string) {
     setLoading(true);
     try {
-      const response = await fetch('/api/insights/list', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ month }),
-      });
+      const response = await fetch(`/api/insights?month=${month}`);
       const result = await response.json();
       if (result.success) {
         setMonthData(result.data);
@@ -46,7 +42,7 @@ export default function InsightsShell({ months, onDataUpdated }: InsightsShellPr
 
   const handleDataRefresh = async () => {
     // Reload months list from API
-    const response = await fetch('/api/insights/list');
+    const response = await fetch('/api/insights');
     const result = await response.json();
     if (result.success) {
       // Update parent or reload page

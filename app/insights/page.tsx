@@ -16,7 +16,7 @@ export default function InsightsPage() {
   async function loadMonths() {
     setLoading(true);
     try {
-      const response = await fetch('/api/insights/list');
+      const response = await fetch('/api/insights');
       const result = await response.json();
       if (result.success) {
         setMonths(result.data || []);
@@ -40,7 +40,18 @@ export default function InsightsPage() {
         </div>
         <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6">
           {loading ? (
-            <div className="text-center text-muted-foreground">Loading...</div>
+            <div className="space-y-6">
+              <div className="flex gap-2">
+                <div className="h-10 w-24 bg-muted rounded-md animate-pulse" />
+                <div className="h-10 w-32 bg-muted rounded-md animate-pulse" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="h-40 bg-muted rounded-md animate-pulse" />
+                <div className="h-40 bg-muted rounded-md animate-pulse" />
+                <div className="h-40 bg-muted rounded-md animate-pulse" />
+                <div className="h-40 bg-muted rounded-md animate-pulse" />
+              </div>
+            </div>
           ) : (
             <InsightsShell months={months} onDataUpdated={loadMonths} />
           )}

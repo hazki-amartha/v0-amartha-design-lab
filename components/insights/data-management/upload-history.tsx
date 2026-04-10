@@ -20,7 +20,7 @@ export default function UploadHistory({ months, onDelete }: UploadHistoryProps) 
 
     setDeleting(month);
     try {
-      const response = await fetch(`/api/insights/list?month=${month}`, {
+      const response = await fetch(`/api/insights?month=${month}`, {
         method: 'DELETE',
       });
 

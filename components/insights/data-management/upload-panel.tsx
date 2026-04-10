@@ -36,7 +36,7 @@ export default function UploadPanel({ onUploadSuccess }: UploadPanelProps) {
       formData.append('month', month.toString());
       formData.append('year', year.toString());
 
-      const response = await fetch('/api/insights/upload', {
+      const response = await fetch('/api/insights', {
         method: 'POST',
         body: formData,
       });
