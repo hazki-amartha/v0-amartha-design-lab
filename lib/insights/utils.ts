@@ -124,7 +124,9 @@ export function aggregateByFeature(
   >();
 
   for (const row of filtered) {
-    const feature = row.app_segments || 'Unknown';
+    // CHANGE THIS LINE: Use trigger_event instead of app_segments
+    const feature = row.trigger_event || 'Unknown'; 
+    
     if (!featureMap.has(feature)) {
       featureMap.set(feature, {
         scores: { delighted: 0, satisfied: 0, dissatisfied: 0, total: 0 },
