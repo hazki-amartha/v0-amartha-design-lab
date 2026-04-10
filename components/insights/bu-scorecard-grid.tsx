@@ -2,7 +2,7 @@
 
 import { BUScorecard } from '@/lib/insights/types';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import SentimentChart from './sentiment-chart';
 
 interface BUScoreCardGridProps {
   scores: BUScorecard[];
@@ -16,11 +16,7 @@ export default function BUScoreCardGrid({
   onSelectBU,
 }: BUScoreCardGridProps) {
   const handleClick = (bu: string) => {
-    if (activeBU === bu) {
-      onSelectBU(null);
-    } else {
-      onSelectBU(bu);
-    }
+    onSelectBU(activeBU === bu ? null : bu);
   };
 
   return (
@@ -31,49 +27,25 @@ export default function BUScoreCardGrid({
           <Card
             key={score.business_unit}
             onClick={() => handleClick(score.business_unit)}
-            className={`p-4 cursor-pointer transition-colors ${
+            className={`shadow-none p-4 cursor-pointer transition-colors gap-0 ${
               isActive
                 ? 'border-primary bg-primary/5'
                 : 'hover:bg-muted border-border'
             }`}
           >
-            <div className="space-y-3">
-              <h3 className="font-semibold text-sm">{score.business_unit}</h3>
+            <h3 className="font-semibold text-[13px] text-card-foreground mb-3">
+              {score.business_unit}
+            </h3>
 
-              {/* Delighted Percentage */}
-              <div>
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Delighted</span>
-                  <span className="text-sm font-semibold text-green-600">
-                    {score.delighted_percentage}%
-                  </span>
-                </div>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div
-                    className="bg-green-600 h-2 rounded-full"
-                    style={{ width: `${score.delighted_percentage}%` }}
-                  />
-                </div>
-              </div>
+            <SentimentChart
+              delighted={score.delighted_percentage}
+              satisfied={score.satisfied_percentage}
+              dissatisfied={score.dissatisfied_percentage}
+            />
 
-              {/* Category Pills */}
-              <div className="flex flex-wrap gap-2 pt-2">
-                <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
-                  {score.delighted_count} Delighted
-                </Badge>
-                <Badge variant="outline" className="text-xs">
-                  {score.satisfied_count} Satisfied
-                </Badge>
-                <Badge variant="outline" className="text-xs bg-red-50 text-red-700 border-red-200">
-                  {score.dissatisfied_count} Dissatisfied
-                </Badge>
-              </div>
-
-              {/* Total Count */}
-              <p className="text-xs text-muted-foreground pt-2">
-                {score.total_responses} responses
-              </p>
-            </div>
+            <p className="text-[11px] text-muted-foreground mt-3">
+              {score.total_responses.toLocaleString()} responses
+            </p>
           </Card>
         );
       })}

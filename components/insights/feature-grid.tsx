@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CSATDataRecord, FeatureDetail } from '@/lib/insights/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import SentimentChart from './sentiment-chart';
 import TrendSparkline from './trend-sparkline';
 import FeatureDetailDrawer from './feature-detail-drawer';
 
@@ -39,51 +40,37 @@ export default function FeatureGrid({
           <Card
             key={feature.feature_name}
             onClick={() => setSelectedFeature(feature)}
-            className="p-4 cursor-pointer hover:shadow-md transition-shadow"
+            className="shadow-none p-4 cursor-pointer hover:bg-muted transition-colors gap-0 border-border"
           >
-            <div className="space-y-3">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold text-sm leading-tight flex-1">
-                  {feature.feature_name}
-                </h3>
-                {activeBU && (
-                  <Badge variant="secondary" className="text-xs flex-shrink-0">
-                    {activeBU}
-                  </Badge>
-                )}
-              </div>
+            {/* Title row with BU badge always visible */}
+            <div className="flex items-start justify-between gap-2 mb-3">
+              <h3 className="font-semibold text-[13px] text-card-foreground leading-tight flex-1">
+                {feature.feature_name}
+              </h3>
+              <Badge variant="secondary" className="text-[10px] flex-shrink-0">
+                {feature.business_unit}
+              </Badge>
+            </div>
 
-              {showTrend ? (
-                <TrendSparkline />
-              ) : (
-                <div className="space-y-2">
-                  {/* Score Pills */}
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="text-center">
-                      <div className="text-sm font-semibold text-green-600">
-                        {feature.score.delighted}%
-                      </div>
-                      <div className="text-xs text-muted-foreground">Delighted</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-sm font-semibold text-blue-600">
-                        {feature.score.satisfied}%
-                      </div>
-                      <div className="text-xs text-muted-foreground">Satisfied</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-sm font-semibold text-red-600">
-                        {feature.score.dissatisfied}%
-                      </div>
-                      <div className="text-xs text-muted-foreground">Dissatisfied</div>
-                    </div>
-                  </div>
-                </div>
-              )}
+            {showTrend ? (
+              <TrendSparkline />
+            ) : (
+              <SentimentChart
+                delighted={feature.score.delighted}
+                satisfied={feature.score.satisfied}
+                dissatisfied={feature.score.dissatisfied}
+              />
+            )}
 
-              <p className="text-xs text-muted-foreground">
-                {feature.total_responses} responses
-              </p>
+            {/* Footer: pain points + delight points */}
+            <div className="flex items-center gap-3 mt-3">
+              <span className="text-[11px] text-muted-foreground">
+                <span className="text-red-500 font-medium">{feature.pain_points.length}</span> pain points
+              </span>
+              <span className="text-muted-foreground/40 text-[11px]">·</span>
+              <span className="text-[11px] text-muted-foreground">
+                <span className="text-green-600 font-medium">{feature.positive_feedback.length}</span> delight points
+              </span>
             </div>
           </Card>
         ))}
