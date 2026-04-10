@@ -22,7 +22,7 @@ export default function InsightsPage() {
         setMonths(result.data || []);
       }
     } catch (error) {
-      console.error('[v0] Error loading months:', error);
+      console.error('Error loading months:', error);
     } finally {
       setLoading(false);
     }

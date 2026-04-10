@@ -34,7 +34,7 @@ export default function InsightsShell({ months, onDataUpdated }: InsightsShellPr
         setMonthData(result.data);
       }
     } catch (error) {
-      console.error('[v0] Error loading month data:', error);
+      console.error('Error loading month data:', error);
     } finally {
       setLoading(false);
     }

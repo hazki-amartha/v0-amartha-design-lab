@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
       data: months,
     });
   } catch (error) {
-    console.error('[v0] Insights GET error:', error);
+    console.error('Insights GET error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to fetch data' },
       { status: 500 }
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       message: `Uploaded ${rows.length} rows for ${monthString}`,
     });
   } catch (error) {
-    console.error('[v0] Insights POST error:', error);
+    console.error('Insights POST error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Upload failed' },
       { status: 500 }
@@ -103,7 +103,7 @@ export async function DELETE(request: NextRequest) {
       message: `Deleted data for ${month}`,
     });
   } catch (error) {
-    console.error('[v0] Insights DELETE error:', error);
+    console.error('Insights DELETE error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to delete data' },
       { status: 500 }

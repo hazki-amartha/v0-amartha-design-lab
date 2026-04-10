@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       message: `Uploaded ${rows.length} rows for ${monthString}`,
     });
   } catch (error) {
-    console.error('[v0] Upload error:', error);
+    console.error('Upload error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Upload failed' },
       { status: 500 }
