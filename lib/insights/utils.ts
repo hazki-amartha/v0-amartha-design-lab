@@ -120,18 +120,19 @@ export function aggregateByFeature(
       scores: { delighted: number; satisfied: number; dissatisfied: number; total: number };
       pain_points: Map<string, number>;
       positive: Map<string, number>;
+      business_unit: string;
     }
   >();
 
   for (const row of filtered) {
-    // CHANGE THIS LINE: Use trigger_event instead of app_segments
-    const feature = row.trigger_event || 'Unknown'; 
-    
+    const feature = row.trigger_event || 'Unknown';
+
     if (!featureMap.has(feature)) {
       featureMap.set(feature, {
         scores: { delighted: 0, satisfied: 0, dissatisfied: 0, total: 0 },
         pain_points: new Map(),
         positive: new Map(),
+        business_unit: row.business_unit || 'Unknown',
       });
     }
 
@@ -162,7 +163,7 @@ export function aggregateByFeature(
       const total = data.scores.total;
       return {
         feature_name,
-        business_unit: buFilter || 'All',
+        business_unit: data.business_unit,
         score: {
           delighted: Math.round((data.scores.delighted / total) * 100),
           satisfied: Math.round((data.scores.satisfied / total) * 100),

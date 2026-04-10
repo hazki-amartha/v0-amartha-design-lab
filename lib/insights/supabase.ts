@@ -1,11 +1,28 @@
-import { supabase } from '@/lib/supabase';
 import { CSATRow, CSATDataRecord, MonthData } from './types';
+import {
+  localUpload,
+  localListMonths,
+  localGetMonth,
+  localDeleteMonth,
+} from './local-store';
+
+const isLocal =
+  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+async function getSupabase() {
+  const { supabase } = await import('@/lib/supabase');
+  return supabase;
+}
 
 export async function uploadCSVData(
   month: string,
   filename: string,
   rows: CSATRow[]
 ): Promise<CSATDataRecord> {
+  if (isLocal) return localUpload(month, filename, rows);
+
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('csat_data')
     .insert({
@@ -18,25 +35,20 @@ export async function uploadCSVData(
     .select()
     .single();
 
-  if (error) {
-    console.error('Supabase upload error:', error);
-    throw new Error(`Failed to upload CSAT data: ${error.message}`);
-  }
-
+  if (error) throw new Error(`Failed to upload CSAT data: ${error.message}`);
   return data as CSATDataRecord;
 }
 
 export async function listAllMonths(): Promise<MonthData[]> {
+  if (isLocal) return localListMonths();
+
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('csat_data')
     .select('month, filename, uploaded_at, row_count')
     .order('uploaded_at', { ascending: false });
 
-  if (error) {
-    console.error('Supabase list error:', error);
-    throw new Error(`Failed to fetch months: ${error.message}`);
-  }
-
+  if (error) throw new Error(`Failed to fetch months: ${error.message}`);
   return (data || []).map((item) => ({
     month: item.month,
     filename: item.filename,
@@ -46,29 +58,28 @@ export async function listAllMonths(): Promise<MonthData[]> {
 }
 
 export async function getMonthData(month: string): Promise<CSATDataRecord | null> {
+  if (isLocal) return localGetMonth(month);
+
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('csat_data')
     .select('*')
     .eq('month', month)
     .single();
 
-  if (error && error.code !== 'PGRST116') {
-    // PGRST116 is "no rows found" which is fine
-    console.error('Supabase fetch error:', error);
+  if (error && error.code !== 'PGRST116')
     throw new Error(`Failed to fetch month data: ${error.message}`);
-  }
-
   return (data || null) as CSATDataRecord | null;
 }
 
 export async function deleteMonthData(month: string): Promise<void> {
+  if (isLocal) return localDeleteMonth(month);
+
+  const supabase = await getSupabase();
   const { error } = await supabase
     .from('csat_data')
     .delete()
     .eq('month', month);
 
-  if (error) {
-    console.error('Supabase delete error:', error);
-    throw new Error(`Failed to delete month data: ${error.message}`);
-  }
+  if (error) throw new Error(`Failed to delete month data: ${error.message}`);
 }

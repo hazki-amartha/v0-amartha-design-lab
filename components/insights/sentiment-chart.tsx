@@ -6,7 +6,7 @@ interface SentimentChartProps {
   dissatisfied: number;
 }
 
-const CHART_HEIGHT = 56; // px
+const CHART_HEIGHT = 90; // px
 
 export default function SentimentChart({
   delighted,
@@ -19,8 +19,12 @@ export default function SentimentChart({
     { label: 'Dissatisfied', value: dissatisfied, color: 'bg-red-400' },
   ];
 
+  const maxValue = Math.max(...bars.map((b) => b.value), 1);
+  // Scale so the tallest bar fills 95% of the container
+  const normalize = (value: number) => Math.max((value / maxValue) * 95, 2);
+
   return (
-    <div className="flex items-end gap-1.5" style={{ height: CHART_HEIGHT + 40 }}>
+    <div className="flex items-end px-2 gap-6" style={{ height: CHART_HEIGHT + 40 }}>
       {bars.map(({ label, value, color }) => (
         <div key={label} className="flex-1 flex flex-col items-center gap-1">
           {/* Bar */}
@@ -29,8 +33,8 @@ export default function SentimentChart({
             style={{ height: CHART_HEIGHT }}
           >
             <div
-              className={`w-full rounded-t-sm ${color} transition-all duration-500`}
-              style={{ height: `${Math.max(value, 2)}%` }}
+              className={`w-full rounded-t-xs ${color} transition-all duration-500`}
+              style={{ height: `${normalize(value)}%` }}
             />
           </div>
           {/* Percentage */}

@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Trash2, Edit2, Plus, Loader2 } from "lucide-react"
+import { PageHeader } from "@/components/page-header"
 
 interface Survey {
   id: string
@@ -76,14 +77,15 @@ export function SurveyList() {
 
   return (
     <div className="space-y-4">
-      {/* Top Header Card - Stays visible during loading */}
-      <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 flex items-center justify-between">
-        <h1 className="text-[22px] font-semibold tracking-tight text-card-foreground">CSAT Surveys</h1>
-        <Button onClick={handleCreateNew} className="gap-2" variant="default">
-          <Plus className="w-4 h-4" />
-          Create New Survey
-        </Button>
-      </div>
+      <PageHeader
+        title="CSAT Surveys"
+        actions={
+          <Button onClick={handleCreateNew} className="gap-2" variant="default">
+            <Plus className="w-4 h-4" />
+            Create New Survey
+          </Button>
+        }
+      />
 
       {/* Dynamic Content Area */}
       <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">

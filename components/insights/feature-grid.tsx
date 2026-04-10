@@ -1,26 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { CSATDataRecord, FeatureDetail } from '@/lib/insights/types';
+import { FeatureDetail } from '@/lib/insights/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import SentimentChart from './sentiment-chart';
-import TrendSparkline from './trend-sparkline';
 import FeatureDetailDrawer from './feature-detail-drawer';
 
 interface FeatureGridProps {
   features: FeatureDetail[];
-  data: CSATDataRecord;
   activeBU: string | null;
-  showTrend: boolean;
 }
 
-export default function FeatureGrid({
-  features,
-  data,
-  activeBU,
-  showTrend,
-}: FeatureGridProps) {
+export default function FeatureGrid({ features, activeBU }: FeatureGridProps) {
   const [selectedFeature, setSelectedFeature] = useState<FeatureDetail | null>(null);
 
   if (features.length === 0) {
@@ -35,14 +27,13 @@ export default function FeatureGrid({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {features.map((feature) => (
           <Card
             key={feature.feature_name}
             onClick={() => setSelectedFeature(feature)}
             className="shadow-none p-4 cursor-pointer hover:bg-muted transition-colors gap-0 border-border"
           >
-            {/* Title row with BU badge always visible */}
             <div className="flex items-start justify-between gap-2 mb-3">
               <h3 className="font-semibold text-[13px] text-card-foreground leading-tight flex-1">
                 {feature.feature_name}
@@ -52,17 +43,12 @@ export default function FeatureGrid({
               </Badge>
             </div>
 
-            {showTrend ? (
-              <TrendSparkline />
-            ) : (
-              <SentimentChart
-                delighted={feature.score.delighted}
-                satisfied={feature.score.satisfied}
-                dissatisfied={feature.score.dissatisfied}
-              />
-            )}
+            <SentimentChart
+              delighted={feature.score.delighted}
+              satisfied={feature.score.satisfied}
+              dissatisfied={feature.score.dissatisfied}
+            />
 
-            {/* Footer: pain points + delight points */}
             <div className="flex items-center gap-3 mt-3">
               <span className="text-[11px] text-muted-foreground">
                 <span className="text-red-500 font-medium">{feature.pain_points.length}</span> pain points

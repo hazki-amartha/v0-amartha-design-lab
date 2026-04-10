@@ -29,7 +29,7 @@ export default function BUScoreCardGrid({
             onClick={() => handleClick(score.business_unit)}
             className={`shadow-none p-4 cursor-pointer transition-colors gap-0 ${
               isActive
-                ? 'border-primary bg-primary/5'
+                ? 'border-accent bg-accent/5'
                 : 'hover:bg-muted border-border'
             }`}
           >

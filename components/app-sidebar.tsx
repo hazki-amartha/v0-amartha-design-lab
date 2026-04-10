@@ -26,7 +26,7 @@ export function AppSidebar() {
         {/* LOGO & TOGGLE SECTION */}
         <div 
           className={cn(
-            "h-[60px] mb-6 px-4 flex items-center transition-all duration-300",
+            "h-[46px] mb-6 px-4 flex items-center transition-all duration-300",
             isCollapsed ? "justify-center" : "justify-between"
           )}
         >
@@ -39,8 +39,8 @@ export function AppSidebar() {
               <Image
                 src="/logo.svg"
                 alt="Amartha Design Lab"
-                width={174}
-                height={48}
+                width={145}
+                height={40}
                 priority
                 className="object-contain"
               />
@@ -50,7 +50,7 @@ export function AppSidebar() {
           {/* Toggle Button */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="border border-primary/10 rounded-sm p-1.5 hover:bg-secondary transition-colors z-20 flex items-center justify-center"
+            className="border-1 border-primary/10 rounded-sm p-2 hover:bg-primary/5 transition-colors z-20 flex items-center justify-center"
           >
             {isCollapsed ? (
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -62,20 +62,20 @@ export function AppSidebar() {
 
         {/* Navigation */}
         <nav className="flex flex-col gap-2 px-4 items-center">
+        <SidebarItem 
+            icon={BarChart2} 
+            label="CSAT Insights" 
+            active={isInsightsActive}
+            isCollapsed={isCollapsed}
+            onClick={() => router.push("/insights")}
+          />
           <SidebarItem 
             icon={FilePlus} 
             label="CSAT Survey" 
             active={isSurveysActive}
             isCollapsed={isCollapsed}
             onClick={() => router.push("/surveys")}
-          />
-          <SidebarItem 
-            icon={BarChart2} 
-            label="User Insights" 
-            active={isInsightsActive}
-            isCollapsed={isCollapsed}
-            onClick={() => router.push("/insights")}
-          />
+          />   
         </nav>
       </div>
     </aside>
@@ -103,8 +103,8 @@ function SidebarItem({
         "flex items-center rounded-sm transition-all duration-200 text-left w-full cursor-pointer",
         isCollapsed ? "justify-center p-3 w-11" : "gap-3 px-4 py-3",
         active
-          ? "bg-[#1A1A1A] text-white shadow-md"
-          : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
+          ? "bg-primary text-primary-foreground shadow-md"
+          : "text-foreground hover:bg-foreground/5"
       )}
     >
       <Icon className="h-5 w-5 shrink-0" />

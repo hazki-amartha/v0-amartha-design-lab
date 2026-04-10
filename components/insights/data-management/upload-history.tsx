@@ -48,7 +48,7 @@ export default function UploadHistory({ months, onDelete }: UploadHistoryProps) 
   return (
     <div className="space-y-2">
       {months.map((month) => (
-        <Card key={month.month} className="p-4">
+        <Card key={month.month} className="p-4 shadow-none rounded-lg">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-sm truncate">{month.filename}</p>
