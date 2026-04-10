@@ -55,7 +55,7 @@ export default function DashboardTab({ data, months, onMonthChange }: DashboardT
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-3">
           <h2 className="text-lg font-semibold">CSAT Summary</h2>
           <div className="inline-grid relative">
             {/* Hidden span mirrors selected label — sizes the grid cell to fit content */}
@@ -78,7 +78,7 @@ export default function DashboardTab({ data, months, onMonthChange }: DashboardT
         </div>
 
         {/* Summary metric cards */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="bg-muted/30 rounded-xl border border-border px-5 py-4">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Overall CSAT</p>
             <p className="text-[28px] font-semibold tracking-tight text-card-foreground leading-none">

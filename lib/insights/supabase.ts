@@ -23,6 +23,10 @@ export async function uploadCSVData(
   if (isLocal) return localUpload(month, filename, rows);
 
   const supabase = await getSupabase();
+
+  // Delete existing record for this month first (upsert pattern)
+  await supabase.from('csat_data').delete().eq('month', month);
+
   const { data, error } = await supabase
     .from('csat_data')
     .insert({
