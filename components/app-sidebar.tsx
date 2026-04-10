@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import { FilePlus, ChevronLeft, ChevronRight, BarChart2 } from "lucide-react"
@@ -96,22 +95,14 @@ function SidebarItem({
   isCollapsed: boolean
   onClick: () => void
 }) {
-  const [isNavigating, setIsNavigating] = React.useState(false)
-
-  const handleClick = () => {
-    setIsNavigating(true)
-    onClick()
-  }
-
   return (
     <button
-      onClick={handleClick}
-      disabled={isNavigating}
+      onClick={onClick}
       title={isCollapsed ? label : ""}
       className={cn(
         "flex items-center rounded-sm transition-all duration-200 text-left w-full cursor-pointer",
         isCollapsed ? "justify-center p-3 w-11" : "gap-3 px-4 py-3",
-        active || isNavigating
+        active
           ? "bg-[#1A1A1A] text-white shadow-md"
           : "text-muted-foreground hover:bg-card/60 hover:text-foreground"
       )}
