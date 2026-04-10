@@ -39,7 +39,7 @@ export default function UploadHistory({ months, onDelete }: UploadHistoryProps) 
 
   if (months.length === 0) {
     return (
-      <Card className="p-8 text-center">
+      <Card className="p-8 shadow-none rounded-lg text-center">
         <p className="text-muted-foreground">No uploads yet</p>
       </Card>
     );

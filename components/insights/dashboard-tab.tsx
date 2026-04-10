@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CSATDataRecord } from '@/lib/insights/types';
+import { Button } from '@/components/ui/button';
 import { aggregateByBU, aggregateByFeature } from '@/lib/insights/utils';
 import BUScoreCardGrid from './bu-scorecard-grid';
 import FeatureGrid from './feature-grid';
@@ -21,7 +22,7 @@ export default function DashboardTab({ data }: DashboardTabProps) {
     <div className="space-y-6">
       {/* BU Scorecard Grid */}
       <div>
-        <h2 className="text-lg font-semibold mb-4">Business Unit Scores</h2>
+        <h2 className="text-lg font-semibold mb-4">Business Unit Summary</h2>
         <BUScoreCardGrid
           scores={buScores}
           activeBU={activeBU}
@@ -32,13 +33,14 @@ export default function DashboardTab({ data }: DashboardTabProps) {
       {/* Feature Grid with Trend Toggle */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Feature Feedback</h2>
-          <button
+          <h2 className="text-lg font-semibold">Journey Level Feedback</h2>
+          <Button
+            variant="outline"
+            size="sm"
             onClick={() => setShowTrend(!showTrend)}
-            className="text-sm px-3 py-1 rounded-md border border-input hover:bg-muted transition-colors"
           >
             {showTrend ? 'Show Scores' : 'Show Trend'}
-          </button>
+          </Button>
         </div>
         <FeatureGrid
           features={features}

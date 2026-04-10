@@ -64,7 +64,7 @@ export default function UploadPanel({ onUploadSuccess }: UploadPanelProps) {
     <>
       <Card
         onClick={() => fileInputRef.current?.click()}
-        className="border-2 border-dashed p-8 text-center cursor-pointer hover:bg-muted/50 transition-colors"
+        className="border-border border-dashed rounded-lg shadow-none p-8 text-center cursor-pointer hover:bg-muted/50 transition-colors"
       >
         <div className="space-y-2">
           <div className="flex justify-center">

@@ -19,7 +19,7 @@ export default function DataManagementTab({
   return (
     <div className="space-y-8">
       {/* Template Download */}
-      <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border">
+      <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg border border-border mt-2">
         <div>
           <h3 className="font-semibold text-sm">CSV Template</h3>
           <p className="text-xs text-muted-foreground mt-1">Download the CSV template to ensure proper data mapping</p>

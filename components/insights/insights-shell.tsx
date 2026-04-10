@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select } from '@/components/ui/select';
 import { CSATDataRecord, MonthData } from '@/lib/insights/types';
 import DashboardTab from './dashboard-tab';
 import DataManagementTab from './data-management-tab';
@@ -71,19 +72,19 @@ export default function InsightsShell({ months, onDataUpdated }: InsightsShellPr
             </div>
           ) : (
             <>
-              <div className="flex items-center gap-2">
-                <label className="text-sm font-medium">Select Month:</label>
-                <select
+              <div className="flex items-center gap-3">
+                <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground shrink-0">Select Month</label>
+                <Select
                   value={selectedMonth || ''}
                   onChange={(e) => setSelectedMonth(e.target.value)}
-                  className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  className="w-auto"
                 >
                   {months.map((m) => (
                     <option key={m.month} value={m.month}>
                       {m.month}
                     </option>
                   ))}
-                </select>
+                </Select>
               </div>
               {loading ? (
                 <div className="text-center text-muted-foreground">Loading...</div>

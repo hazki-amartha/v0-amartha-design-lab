@@ -9,6 +9,8 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 
 interface MonthPickerDialogProps {
   open: boolean;
@@ -58,27 +60,25 @@ export default function MonthPickerDialog({
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Month</label>
-            <select
+            <label className="block text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">Month</label>
+            <Select
               value={month}
               onChange={(e) => setMonth(parseInt(e.target.value))}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             >
               {monthNames.map((m, idx) => (
                 <option key={idx} value={idx + 1}>
                   {m}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Year</label>
-            <input
+            <label className="block text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">Year</label>
+            <Input
               type="number"
               value={year}
               onChange={(e) => setYear(parseInt(e.target.value))}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             />
           </div>
         </div>
