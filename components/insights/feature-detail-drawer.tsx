@@ -11,7 +11,7 @@ interface FeatureDetailDrawerProps {
   onClose: () => void;
 }
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 function FeedbackList({
   items,
@@ -30,36 +30,38 @@ function FeedbackList({
     <div className="space-y-3">
       {visible.map((item, idx) => (
         <div key={idx} className="space-y-1">
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-xs text-foreground flex-1">{item.text}</p>
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <p className="text-[12px] text-foreground flex-1">{item.text}</p>
             <Badge variant="outline" className="text-xs flex-shrink-0">
               {item.count}
             </Badge>
           </div>
-          <div className="w-full bg-muted rounded-full h-1.5">
+          <div className="w-90 bg-muted rounded-full h-1">
             <div
-              className={`${barColor} h-1.5 rounded-full transition-all duration-500`}
+              className={`${barColor} h-1 rounded-full transition-all duration-500`}
               style={{ width: `${normalize(item.count)}%` }}
             />
           </div>
         </div>
       ))}
       {hasMore ? (
-        <button
+        <Button
           onClick={() => setLimit((l) => l + PAGE_SIZE)}
-          className="flex items-center gap-1 text-[12px] font-medium text-muted-foreground hover:text-card-foreground transition-colors mt-1"
+          variant="outline"
+          size="sm"
         >
           <ChevronDown className="h-3.5 w-3.5" />
           View {Math.min(PAGE_SIZE, items.length - limit)} more
-        </button>
+        </Button>
       ) : limit > PAGE_SIZE && (
-        <button
+        <Button
           onClick={() => setLimit(PAGE_SIZE)}
-          className="flex items-center gap-1 text-[12px] font-medium text-muted-foreground hover:text-card-foreground transition-colors mt-1"
+          variant="outline"
+          size="sm"
         >
           <ChevronUp className="h-3.5 w-3.5" />
           View less
-        </button>
+        </Button>
       )}
     </div>
   );
@@ -80,8 +82,8 @@ export default function FeatureDetailDrawer({
             <h2 className="font-semibold text-sm">{feature.feature_name}</h2>
             <Badge variant="secondary">{feature.business_unit}</Badge>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8">
-            <X className="w-4 h-4" />
+          <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8 p-4 rounded-sm hover:bg-secondary hover:text-primary transition-colors">
+            <X className="w-5 h-5" />
           </Button>
         </div>
 
@@ -106,11 +108,17 @@ export default function FeatureDetailDrawer({
             </div>
           </div>
 
+          <div className="pb-4 border-b border-border">
+            <p className="text-xs text-muted-foreground">
+              Total responses: {feature.total_responses}
+            </p>
+          </div>
+
           {/* Pain Points */}
           {feature.pain_points.length > 0 && (
             <div>
               <h3 className="text-sm font-semibold mb-3">Pain Points</h3>
-              <FeedbackList items={feature.pain_points} barColor="bg-red-500" />
+              <FeedbackList items={feature.pain_points} barColor="bg-chart-5" />
             </div>
           )}
 
@@ -118,15 +126,9 @@ export default function FeatureDetailDrawer({
           {feature.positive_feedback.length > 0 && (
             <div>
               <h3 className="text-sm font-semibold mb-3">What Users Love</h3>
-              <FeedbackList items={feature.positive_feedback} barColor="bg-green-500" />
+              <FeedbackList items={feature.positive_feedback} barColor="bg-chart-3" />
             </div>
           )}
-
-          <div className="pt-4 border-t border-border">
-            <p className="text-xs text-muted-foreground">
-              Total responses: {feature.total_responses}
-            </p>
-          </div>
         </div>
       </div>
     </>

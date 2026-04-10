@@ -14,9 +14,9 @@ export default function SentimentChart({
   dissatisfied,
 }: SentimentChartProps) {
   const bars = [
-    { label: 'Delighted', value: delighted, color: 'bg-green-500' },
-    { label: 'Satisfied', value: satisfied, color: 'bg-blue-500' },
-    { label: 'Dissatisfied', value: dissatisfied, color: 'bg-red-400' },
+    { label: 'Delighted', value: delighted, color: 'bg-chart-3' },
+    { label: 'Satisfied', value: satisfied, color: 'bg-chart-2' },
+    { label: 'Dissatisfied', value: dissatisfied, color: 'bg-chart-5' },
   ];
 
   const maxValue = Math.max(...bars.map((b) => b.value), 1);

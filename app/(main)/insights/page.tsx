@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import InsightsShell from '@/components/insights/insights-shell';
 import { MonthData } from '@/lib/insights/types';
 import { Button } from '@/components/ui/button';
-import { Select } from '@/components/ui/select';
 import { PageHeader } from '@/components/page-header';
 import { Database } from 'lucide-react';
 
@@ -41,27 +40,14 @@ export default function InsightsPage() {
       <PageHeader
         title="CSAT Insights"
         actions={
-          <>
-            {months.length > 0 && (
-              <Select
-                value={selectedMonth || ''}
-                onChange={(e) => setSelectedMonth(e.target.value)}
-                className="w-auto h-9 justify-center"
-              >
-                {months.map((m) => (
-                  <option key={m.month} value={m.month}>{m.month}</option>
-                ))}
-              </Select>
-            )}
-            <Button
-              variant="default"
-              onClick={() => router.push('/insights/data')}
-              className="gap-2"
-            >
-              <Database className="w-4 h-4" />
-              Data Management
-            </Button>
-          </>
+          <Button
+            variant="default"
+            onClick={() => router.push('/insights/data')}
+            className="gap-2"
+          >
+            <Database className="w-4 h-4" />
+            Data Management
+          </Button>
         }
       />
       <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6">

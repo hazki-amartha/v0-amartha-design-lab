@@ -14,6 +14,7 @@ interface InsightsShellProps {
 export default function InsightsShell({
   months,
   selectedMonth,
+  onMonthChange,
 }: InsightsShellProps) {
   const [monthData, setMonthData] = useState<CSATDataRecord | null>(null);
   const [loading, setLoading] = useState(false);
@@ -49,5 +50,7 @@ export default function InsightsShell({
     return <div className="text-center text-muted-foreground py-12">Loading...</div>;
   }
 
-  return monthData ? <DashboardTab data={monthData} /> : null;
+  return monthData ? (
+    <DashboardTab data={monthData} months={months} onMonthChange={onMonthChange} />
+  ) : null;
 }
