@@ -76,7 +76,7 @@ export default function SentimentChart({
             offset={6}
             className="fill-background"
             fontSize={10}
-            formatter={(value: number) => `${value}%`}
+            formatter={(value: any) => `${value}%`}
           />
         </Bar>
       </BarChart>
