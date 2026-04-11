@@ -78,7 +78,7 @@ export default function DashboardTab({ data, months, onMonthChange }: DashboardT
         </div>
 
         {/* Summary metric cards */}
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div className="bg-muted/30 rounded-xl border border-border px-5 py-4">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Overall CSAT</p>
             <p className="text-[28px] font-semibold tracking-tight text-card-foreground leading-none">

@@ -88,7 +88,7 @@ export function SurveyList() {
       />
 
       <div className="flex-1 overflow-y-auto min-h-0">
-      <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-card rounded-b-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />

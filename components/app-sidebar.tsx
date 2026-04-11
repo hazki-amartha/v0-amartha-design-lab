@@ -17,11 +17,11 @@ export function AppSidebar() {
   return (
     <aside 
       className={cn(
-        "sticky top-0 h-screen shrink-0 p-3 flex flex-col transition-all duration-300 ease-in-out",
-        isCollapsed ? "w-[90px]" : "w-[300px]"
+        "sticky top-0 h-screen shrink-0 py-3 flex flex-col transition-all duration-300 ease-in-out",
+        isCollapsed ? "w-[70px]" : "w-[250px]"
       )}
     >
-      <div className="relative bg-sidebar rounded-2xl py-3 shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full border border-muted-foreground/5">
+      <div className="relative rounded-2xl py-3 h-full">
 
         {/* LOGO & TOGGLE SECTION */}
         <div 

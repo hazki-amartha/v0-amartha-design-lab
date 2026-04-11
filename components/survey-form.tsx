@@ -31,9 +31,9 @@ export function SurveyForm({
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col bg-card rounded-b-lg p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
       {/* Survey Configuration (Name & Type) */}
-      <div className="bg-card rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col gap-6">
+      <div className="flex flex-col gap-6">
         <FieldGroup label="Survey Name">
           <input
             type="text"
@@ -194,7 +194,7 @@ function QuestionCard({
   }
 
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+    <div className="mt-6 border-t pt-6">
       <div className="flex items-baseline gap-3 mb-6">
         <h3 className="text-[15px] font-semibold text-card-foreground">{title}</h3>
         <span className="text-[11px] text-muted-foreground">{subtitle}</span>

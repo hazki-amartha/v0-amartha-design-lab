@@ -63,24 +63,26 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       {/* Preview Card */}
-      <div className="bg-card rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden">
+      <div className="bg-card rounded-t-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden">
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
           <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
             Live Preview
           </span>
           <button
             onClick={handleReload}
-            className="p-1.5 rounded-lg text-muted-foreground hover:text-card-foreground hover:bg-secondary transition-colors"
+            className="p-2 -ml-2 rounded-sm hover:bg-secondary transition-colors text-muted-foreground hover:text-card-foreground"
             aria-label="Reload preview"
           >
-            <RotateCcw className="h-3.5 w-3.5" />
+            <RotateCcw className="h-4 w-4" />
           </button>
+
+
         </div>
 
         {/* Iframe rendered directly */}
-        <div className="relative w-full bg-[#F3F6FD]" style={{ height: 540 }}>
+        <div className="relative w-full bg-[#F3F6FD]" style={{ height: 520 }}>
           {blobUrl && (
             <iframe
               key={iframeKey}
@@ -93,7 +95,7 @@ export function SurveyPreview({ html }: SurveyPreviewProps) {
       </div>
 
       {/* Actions card */}
-      <div className="bg-card rounded-2xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+      <div className="bg-card rounded-b-lg p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
         <div className="flex flex-col gap-2.5">
           <button
             onClick={handleCopy}

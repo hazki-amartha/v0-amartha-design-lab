@@ -8,7 +8,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, onBack, actions }: PageHeaderProps) {
   return (
-    <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] px-6 h-[72px] flex items-center justify-between shrink-0">
+    <div className="bg-card rounded-t-lg border-b shadow-[0_1px_3px_rgba(0,0,0,0.04)] px-6 h-[72px] flex items-center justify-between shrink-0">
       <div className="flex items-center gap-2">
         {onBack && (
           <button

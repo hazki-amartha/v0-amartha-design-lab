@@ -36,7 +36,7 @@ export default function InsightsPage() {
   }
 
   return (
-    <main className="flex-1 flex flex-col gap-3 p-3 pl-0 h-screen overflow-hidden">
+    <main className="flex-1 flex flex-col p-3 pl-0 h-screen overflow-hidden">
       <PageHeader
         title="CSAT Insights"
         actions={
@@ -51,7 +51,7 @@ export default function InsightsPage() {
         }
       />
       <div className="flex-1 overflow-y-auto min-h-0">
-      <div className="bg-card rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6">
+      <div className="bg-card rounded-b-lg shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6">
         {loading ? (
           <div className="grid grid-cols-2 gap-4">
             <div className="h-40 bg-muted rounded-md animate-pulse" />

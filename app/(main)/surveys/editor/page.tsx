@@ -116,34 +116,38 @@ function EditorContent() {
   }
 
   return (
-    <main className="flex flex-1 flex-col p-3 gap-3 pl-0 h-screen overflow-hidden">
-      <PageHeader
-        title={surveyId ? "Edit Survey" : "New Survey"}
-        onBack={() => router.push("/surveys")}
-        actions={
-          <>
-            {surveyId && (
-              <Button onClick={handleDelete} variant="destructive">
-                Delete
+    <main className="flex flex-row p-3 gap-3 pl-0 h-screen w-full overflow-hidden">
+      <div className="flex flex-col w-full">
+        <PageHeader
+          title={surveyId ? "Edit Survey" : "New Survey"}
+          onBack={() => router.push("/surveys")}
+          actions={
+            <>
+              {surveyId && (
+                <Button onClick={handleDelete} variant="destructive">
+                  Delete
+                </Button>
+              )}
+              <Button onClick={handleSave} disabled={saving} variant="default" className="px-8">
+                {saving ? "Saving..." : "Save"}
               </Button>
-            )}
-            <Button onClick={handleSave} disabled={saving} variant="default" className="px-8">
-              {saving ? "Saving..." : "Save"}
-            </Button>
-          </>
-        }
-      />
+            </>
+          }
+        />
 
-      {/* Scrollable content area */}
-      <div className="flex gap-2 flex-1 overflow-hidden">
-        <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: "none" }}>
-          <SurveyForm
-            config={config}
-            onChange={setConfig}
-            surveyName={surveyName}
-            onNameChange={setSurveyName}
-          />
+        {/* Scrollable content area */}
+        <div className="flex gap-2 flex-1 overflow-hidden">
+          <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+            <SurveyForm
+              config={config}
+              onChange={setConfig}
+              surveyName={surveyName}
+              onNameChange={setSurveyName}
+            />
+          </div>
         </div>
+      </div>
+      <div>
         <div className="w-[320px] shrink-0 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
           <SurveyPreview html={html} />
         </div>
