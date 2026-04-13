@@ -8,7 +8,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono
 
 export const metadata: Metadata = {
   title: 'Amartha Design Lab',
-  description: 'A unified internal portal for design-led innovation',
+  description: 'Internal portal for design-led initiatives',
 }
 
 export const viewport: Viewport = {
