@@ -46,7 +46,7 @@ export default function InsightsPage() {
             className="gap-2"
           >
             <Database className="w-4 h-4" />
-            Manage Data
+            Manage Data Source
           </Button>
         }
       />
