@@ -57,7 +57,7 @@ export default function NPSPage() {
                 Email
               </a>
               <a
-                href="slack://user?username=kanya.hadyani"
+                href="https://amartha.slack.com/team/U046NE13KDK"
                 className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-[12px] font-medium border border-border bg-card text-card-foreground hover:bg-muted/50 transition-colors"
               >
                 <MessageCircle className="h-3.5 w-3.5 shrink-0" />
