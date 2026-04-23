@@ -101,6 +101,14 @@ export default function NPSIssues() {
             </button>
           ))}
         </div>
+        {(activeTheme || activeProduct) && (
+          <button
+            onClick={() => { setActiveTheme(null); setActiveProduct(null); }}
+            className="text-[11px] text-muted-foreground hover:text-card-foreground transition-colors underline underline-offset-2 shrink-0"
+          >
+            Clear all
+          </button>
+        )}
       </div>
 
       {/* Theme selector cards */}
@@ -159,20 +167,12 @@ export default function NPSIssues() {
       {/* Issue table */}
       <div>
         {/* Table meta row */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="mb-2">
           <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
             {filtered.length} {filtered.length === 1 ? 'issue' : 'issues'}
             {activeTheme ? ` — ${activeTheme}` : ''}
             {activeProduct ? ` · ${activeProduct}` : ''}
           </p>
-          {(activeTheme || activeProduct) && (
-            <button
-              onClick={() => { setActiveTheme(null); setActiveProduct(null); }}
-              className="text-[11px] text-muted-foreground hover:text-card-foreground transition-colors underline underline-offset-2"
-            >
-              Clear all
-            </button>
-          )}
         </div>
 
         {filtered.length === 0 ? (
