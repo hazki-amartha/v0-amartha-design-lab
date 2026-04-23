@@ -37,18 +37,17 @@ function matchesProduct(item: ActionItem, product: string | null) {
 function ActionRow({ item }: { item: ActionItem }) {
   const tagClass = TAG_COLORS[item.tag] ?? 'bg-muted text-muted-foreground border-border';
   return (
-    <div className="py-3 border-b border-border last:border-0 space-y-2">
+    <div className="py-3.5 border-b border-border last:border-0 space-y-2">
       <p className="text-[13px] font-semibold text-card-foreground leading-snug line-clamp-2">
         {item.feature}
       </p>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full border shrink-0', tagClass)}>
           {item.tag}
         </span>
-        <span className="text-[11px] text-muted-foreground flex-1 min-w-0 truncate">
-          {item.product}
-        </span>
-        <span className={cn('shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full border', IMPACT_CONFIG[item.impact])}>
+        <span className="text-[11px] text-muted-foreground shrink-0">{item.product}</span>
+        <span className="text-muted-foreground/30 shrink-0">·</span>
+        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full border shrink-0', IMPACT_CONFIG[item.impact])}>
           {item.impact}
         </span>
       </div>
