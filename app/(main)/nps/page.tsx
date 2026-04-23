@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { FileText, Clock, Mail, MessageCircle, Users } from 'lucide-react';
+import { FileText, Clock, Mail, MessageCircle } from 'lucide-react';
 import { PageHeader } from '@/components/page-header';
 import NPSOverview from '@/components/nps/nps-overview';
 import NPSTrendChart from '@/components/nps/nps-trend-chart';
@@ -13,28 +12,13 @@ import { npsOverview } from '@/lib/nps/data';
 const REPORT_URL = 'https://docs.google.com/presentation/d/1TeKdo49H6jCePvCYsnk8mhzAFrCnyjKUIqcV-yDncb4/edit?usp=sharing';
 
 export default function NPSPage() {
-  const [visitors, setVisitors] = useState<number | null>(null);
-
-  useEffect(() => {
-    fetch('https://api.counterapi.dev/v1/amarthadesignlab/nps/up')
-      .then((r) => r.json())
-      .then((data) => setVisitors(data.count))
-      .catch(() => {});
-  }, []);
-
   return (
     <main className="flex-1 flex flex-col p-3 pl-0 h-screen overflow-hidden">
       <PageHeader
         title="NPS Dashboard"
         actions={
           <div className="flex items-center gap-3">
-            {visitors !== null && (
-              <div className="flex items-center gap-1.5 text-muted-foreground">
-                <Users className="h-3.5 w-3.5 shrink-0" />
-                <span className="text-[12px]">{visitors.toLocaleString()} visits</span>
-              </div>
-            )}
-            <div className="flex items-center gap-1.5 text-muted-foreground">
+<div className="flex items-center gap-1.5 text-muted-foreground">
               <Clock className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[12px]">Data from {npsOverview.period} · Updated {npsOverview.lastUpdated}</span>
             </div>
