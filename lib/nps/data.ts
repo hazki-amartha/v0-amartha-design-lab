@@ -12,6 +12,7 @@ export const npsOverview = {
   detractors: 18,
   totalResponses: 1070,
   period: 'Q4 2025',
+  lastUpdated: 'January 2026',
 };
 
 // Overall NPS trend Q1–Q4 2025
