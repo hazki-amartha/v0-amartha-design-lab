@@ -51,7 +51,7 @@ export default function NPSTrendChart() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold">NPS Trend</h2>
-          <p className="text-[12px] text-muted-foreground mt-0.5">Q1 2024 — Q4 2024</p>
+          <p className="text-[12px] text-muted-foreground mt-0.5">Q1 2025 — Q4 2025</p>
         </div>
         <div className="flex gap-1 bg-muted rounded-lg p-1">
           {(['overall', 'product', 'segment'] as View[]).map((v) => (
