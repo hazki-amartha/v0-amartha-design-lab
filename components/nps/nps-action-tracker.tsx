@@ -60,10 +60,15 @@ export default function NPSActionTracker() {
   const [items, setItems] = useState(fallbackItems);
 
   useEffect(() => {
-    fetch('/api/nps/action-items')
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { if (data && !data.error) setItems(data); })
-      .catch(() => {});
+    const load = () =>
+      fetch('/api/nps/action-items')
+        .then(r => r.ok ? r.json() : null)
+        .then(data => { if (data && !data.error) setItems(data); })
+        .catch(() => {});
+
+    load();
+    const timer = setInterval(load, 15000);
+    return () => clearInterval(timer);
   }, []);
 
   function getFiltered(key: 'backlog' | 'inProgress' | 'planned') {
