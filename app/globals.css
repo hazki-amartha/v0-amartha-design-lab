@@ -91,6 +91,7 @@
   }
   h1, h2 {
     font-family: var(--font-heading), 'Plus Jakarta Sans', system-ui, sans-serif;
-    color: var(--accent);
+    font-weight: 700;
+    color: var(--foreground);
   }
 }
