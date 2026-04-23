@@ -182,7 +182,7 @@ export default function NPSIssues() {
         ) : (
           <div className="rounded-xl border border-border overflow-hidden">
             {/* Column headers */}
-            <div className="grid grid-cols-[24px_1fr_140px_120px_52px] gap-0 bg-muted/50 border-b border-border px-4 py-2">
+            <div className="grid grid-cols-[16px_1fr_150px_120px_56px] bg-muted/50 border-b border-border px-5 py-3">
               <span />
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Issue</span>
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Product · Journey</span>
@@ -191,7 +191,7 @@ export default function NPSIssues() {
             </div>
 
             {/* Rows — scrollable past 12 items */}
-            <div className={cn(filtered.length > 12 ? 'max-h-[480px] overflow-y-auto' : '')}>
+            <div className={cn(filtered.length > 12 ? 'max-h-[520px] overflow-y-auto' : '')}>
               {filtered.map((issue, idx) => {
                 const impactDot = IMPACT_CONFIG[issue.impact].bar;
                 const tagColor = TAG_COLORS[issue.tag] ?? 'bg-muted text-muted-foreground border-border';
@@ -203,16 +203,13 @@ export default function NPSIssues() {
                 return (
                   <div
                     key={`${issue.product}-${issue.journey}-${idx}`}
-                    className={cn(
-                      'grid grid-cols-[24px_1fr_140px_120px_52px] gap-0 items-center px-4 py-2.5 border-b border-border last:border-0 transition-colors hover:bg-muted/30',
-                      idx % 2 === 0 ? 'bg-card' : 'bg-muted/10'
-                    )}
+                    className="grid grid-cols-[16px_1fr_150px_120px_56px] items-center px-5 py-4 border-b border-border last:border-0 transition-colors hover:bg-muted/20 bg-card"
                   >
                     {/* Severity dot */}
                     <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', impactDot)} />
 
-                    {/* Issue text — truncates gracefully */}
-                    <p className="text-[12.5px] text-card-foreground pr-4 leading-snug line-clamp-2">
+                    {/* Issue text */}
+                    <p className="text-[13px] text-card-foreground pr-6 leading-snug line-clamp-2">
                       {issue.issue}
                     </p>
 
@@ -228,7 +225,7 @@ export default function NPSIssues() {
                       {issue.tag}
                     </span>
 
-                    {/* Percentage — color encodes severity */}
+                    {/* Percentage */}
                     <span className={cn('text-[13px] font-semibold tabular-nums text-right', pctColor)}>
                       {issue.percentage}%
                     </span>
