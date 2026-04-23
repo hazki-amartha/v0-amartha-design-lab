@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { actionItems, type ActionItem, type ImpactLevel } from '@/lib/nps/data';
+import { useState, useEffect } from 'react';
+import { actionItems as fallbackItems, type ActionItem, type ImpactLevel } from '@/lib/nps/data';
 import { cn } from '@/lib/utils';
 
 
@@ -57,9 +57,17 @@ function ActionRow({ item }: { item: ActionItem }) {
 export default function NPSActionTracker() {
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [activeImpact, setActiveImpact]   = useState<ImpactLevel | null>(null);
+  const [items, setItems] = useState(fallbackItems);
+
+  useEffect(() => {
+    fetch('/api/nps/action-items')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data && !data.error) setItems(data); })
+      .catch(() => {});
+  }, []);
 
   function getFiltered(key: 'backlog' | 'inProgress' | 'planned') {
-    return actionItems[key].filter(
+    return items[key].filter(
       (item) =>
         matchesProduct(item, activeProduct) &&
         (!activeImpact || item.impact === activeImpact)
