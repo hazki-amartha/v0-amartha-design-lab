@@ -4,21 +4,6 @@ import { useState } from 'react';
 import { actionItems, type ActionItem, type ImpactLevel } from '@/lib/nps/data';
 import { cn } from '@/lib/utils';
 
-const IMPACT_CONFIG: Record<ImpactLevel, string> = {
-  High:   'bg-red-50 text-red-700 border-red-200',
-  Medium: 'bg-amber-50 text-amber-700 border-amber-200',
-  Low:    'bg-slate-50 text-slate-600 border-slate-200',
-};
-
-const TAG_COLORS: Record<string, string> = {
-  DLB:               'bg-violet-50 text-violet-700 border-violet-200',
-  Disbursement:      'bg-orange-50 text-orange-700 border-orange-200',
-  'Loan Status':     'bg-blue-50 text-blue-700 border-blue-200',
-  'Profit Visibility':'bg-emerald-50 text-emerald-700 border-emerald-200',
-  Promo:             'bg-pink-50 text-pink-700 border-pink-200',
-  Performance:       'bg-red-50 text-red-700 border-red-200',
-  Onboarding:        'bg-sky-50 text-sky-700 border-sky-200',
-};
 
 const SECTIONS = [
   { key: 'backlog'    as const, label: 'Backlog',     dot: 'bg-slate-400',  headerClass: 'text-slate-600',  topBar: 'bg-slate-200'  },
@@ -34,21 +19,35 @@ function matchesProduct(item: ActionItem, product: string | null) {
   return item.product.includes(product);
 }
 
+const IMPACT_DOT: Record<ImpactLevel, string> = {
+  High:   'bg-red-400',
+  Medium: 'bg-amber-400',
+  Low:    'bg-slate-300',
+};
+
+const IMPACT_TEXT: Record<ImpactLevel, string> = {
+  High:   'text-red-600',
+  Medium: 'text-amber-600',
+  Low:    'text-slate-500',
+};
+
 function ActionRow({ item }: { item: ActionItem }) {
-  const tagClass = TAG_COLORS[item.tag] ?? 'bg-muted text-muted-foreground border-border';
   return (
-    <div className="py-3.5 border-b border-border last:border-0 space-y-2">
+    <div className="py-4 border-b border-border last:border-0 space-y-1.5">
       <p className="text-[13px] font-semibold text-card-foreground leading-snug line-clamp-2">
         {item.feature}
       </p>
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full border shrink-0', tagClass)}>
+      <div className="flex items-center gap-1.5 flex-wrap">
+        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-muted text-muted-foreground border-border shrink-0">
           {item.tag}
         </span>
+        <span className="text-muted-foreground/30">·</span>
         <span className="text-[11px] text-muted-foreground shrink-0">{item.product}</span>
-        <span className="text-muted-foreground/30 shrink-0">·</span>
-        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full border shrink-0', IMPACT_CONFIG[item.impact])}>
-          {item.impact}
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', IMPACT_DOT[item.impact])} />
+        <span className={cn('text-[11px] font-medium', IMPACT_TEXT[item.impact])}>
+          {item.impact} impact
         </span>
       </div>
     </div>
@@ -108,12 +107,13 @@ export default function NPSActionTracker() {
                 key={impact}
                 onClick={() => setActiveImpact(activeImpact === impact ? null : impact)}
                 className={cn(
-                  'px-3 py-1 rounded-full text-[12px] font-medium border transition-colors',
+                  'flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium border transition-colors',
                   activeImpact === impact
-                    ? IMPACT_CONFIG[impact]
+                    ? 'bg-primary text-primary-foreground border-primary'
                     : 'bg-card text-muted-foreground border-border hover:border-muted-foreground/40 hover:text-card-foreground'
                 )}
               >
+                <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', IMPACT_DOT[impact])} />
                 {impact}
               </button>
             ))}
