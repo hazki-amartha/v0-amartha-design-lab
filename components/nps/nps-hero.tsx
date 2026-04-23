@@ -1,49 +1,72 @@
-import styles from './nps-hero.module.css';
+import { TrendingDown } from 'lucide-react';
 
 export default function NPSHero() {
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-[#0f0b2a] px-8 py-10">
-      {/* Animated blobs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className={`${styles.blob} ${styles.blob1}`} />
-        <div className={`${styles.blob} ${styles.blob2}`} />
-        <div className={`${styles.blob} ${styles.blob3}`} />
-        <div className={`${styles.blob} ${styles.blob4}`} />
-      </div>
-
-      {/* Noise texture overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 flex items-center justify-between flex-wrap gap-6">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-white/50 mb-2">
-            Net Promoter Score · Q4 2025
-          </p>
-          <div className="flex items-end gap-4">
-            <span className="text-[72px] font-bold leading-none text-white tracking-tight">40</span>
-            <div className="mb-2">
-              <span className="text-[14px] font-medium text-red-400">↓4 from Q3</span>
-              <p className="text-[12px] text-white/40 mt-0.5">Previous: 44</p>
-            </div>
+    <div className="grid grid-cols-[2fr_3fr] gap-4">
+      {/* Left: NPS Score */}
+      <div className="rounded-2xl border border-border bg-card px-6 py-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+          NPS Score — Q4 2025
+        </p>
+        <div className="flex items-end gap-3 mb-4">
+          <span className="text-[64px] font-bold leading-none text-foreground tracking-tight">40</span>
+          <div className="mb-1.5 flex items-center gap-1">
+            <TrendingDown className="h-4 w-4 text-red-500" strokeWidth={2.5} />
+            <span className="text-[14px] font-semibold text-red-500">-4 pts</span>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-border text-muted-foreground">
+            Good
+          </span>
+          <span className="text-[12px] text-muted-foreground">1,070 responses</span>
+        </div>
+      </div>
 
-        <div className="flex gap-8">
-          <div className="text-center">
-            <p className="text-[36px] font-bold text-emerald-400 leading-none">58%</p>
-            <p className="text-[11px] text-white/50 mt-1.5">Promoters</p>
+      {/* Right: Respondent Breakdown */}
+      <div className="rounded-2xl border border-border bg-card px-6 py-5">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+          Respondent Breakdown
+        </p>
+
+        {/* Segmented bar */}
+        <div className="flex h-3 rounded-full overflow-hidden mb-5">
+          <div className="bg-emerald-400" style={{ width: '58%' }} />
+          <div className="bg-slate-200 mx-0.5" style={{ width: '24%' }} />
+          <div className="bg-red-400" style={{ width: '18%' }} />
+        </div>
+
+        {/* Three columns */}
+        <div className="grid grid-cols-3 divide-x divide-border">
+          <div className="pr-6">
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+              <span className="text-[12px] text-muted-foreground">Promoters</span>
+            </div>
+            <p className="text-[32px] font-bold text-emerald-500 leading-none mb-1">
+              58<span className="text-[18px] font-semibold">%</span>
+            </p>
+            <p className="text-[11px] text-muted-foreground">Score 9–10</p>
           </div>
-          <div className="text-center">
-            <p className="text-[36px] font-bold text-white/60 leading-none">24%</p>
-            <p className="text-[11px] text-white/50 mt-1.5">Passives</p>
+          <div className="px-6">
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-slate-300 shrink-0" />
+              <span className="text-[12px] text-muted-foreground">Passives</span>
+            </div>
+            <p className="text-[32px] font-bold text-slate-500 leading-none mb-1">
+              24<span className="text-[18px] font-semibold">%</span>
+            </p>
+            <p className="text-[11px] text-muted-foreground">Score 7–8</p>
           </div>
-          <div className="text-center">
-            <p className="text-[36px] font-bold text-red-400 leading-none">18%</p>
-            <p className="text-[11px] text-white/50 mt-1.5">Detractors</p>
+          <div className="pl-6">
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-red-400 shrink-0" />
+              <span className="text-[12px] text-muted-foreground">Detractors</span>
+            </div>
+            <p className="text-[32px] font-bold text-red-500 leading-none mb-1">
+              18<span className="text-[18px] font-semibold">%</span>
+            </p>
+            <p className="text-[11px] text-muted-foreground">Score 0–6</p>
           </div>
         </div>
       </div>
