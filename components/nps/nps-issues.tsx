@@ -78,8 +78,29 @@ export default function NPSIssues() {
       <div>
         <h2 className="text-lg font-semibold">Root Causes & Issues</h2>
         <p className="text-[12px] text-muted-foreground mt-0.5">
-          Select a theme to filter specific issues — or view all at once
+          Filter by product, then select a theme to explore specific issues
         </p>
+      </div>
+
+      {/* Product filter */}
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground shrink-0">Product</span>
+        <div className="flex gap-1.5 flex-wrap">
+          {PRODUCTS.map((p) => (
+            <button
+              key={p}
+              onClick={() => setActiveProduct(activeProduct === p ? null : p)}
+              className={cn(
+                'px-3 py-1 rounded-full text-[12px] font-medium border transition-colors',
+                activeProduct === p
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'bg-card text-muted-foreground border-border hover:border-muted-foreground/40 hover:text-card-foreground'
+              )}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Theme selector cards */}
@@ -133,27 +154,6 @@ export default function NPSIssues() {
             </button>
           );
         })}
-      </div>
-
-      {/* Product filter */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground shrink-0">Product</span>
-        <div className="flex gap-1.5 flex-wrap">
-          {PRODUCTS.map((p) => (
-            <button
-              key={p}
-              onClick={() => setActiveProduct(activeProduct === p ? null : p)}
-              className={cn(
-                'px-3 py-1 rounded-full text-[12px] font-medium border transition-colors',
-                activeProduct === p
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-card text-muted-foreground border-border hover:border-muted-foreground/40 hover:text-card-foreground'
-              )}
-            >
-              {p}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Issue table */}
