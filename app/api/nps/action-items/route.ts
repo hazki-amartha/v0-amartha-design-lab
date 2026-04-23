@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { actionItems } from '@/lib/nps/data';
 
 const SHEET_ID = '1Wyxzyc8db8M75lo0GbxlDA-IoFEx52ZH8RwUTQva34k';
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=898230888`;
 
 type Status = 'backlog' | 'inProgress' | 'planned';
 
@@ -33,7 +33,7 @@ function parseCSV(text: string): string[][] {
 
 export async function GET() {
   try {
-    const res = await fetch(CSV_URL, { next: { revalidate: 1800 } });
+    const res = await fetch(CSV_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Sheet returned ${res.status}`);
 
     const text = await res.text();
