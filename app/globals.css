@@ -95,3 +95,55 @@
     color: var(--foreground);
   }
 }
+
+/* NPS Hero blob animations */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.55;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.blob-1 {
+  width: 420px; height: 420px;
+  background: #6c5ae4;
+  top: -120px; left: -80px;
+  animation: blob1 9s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width: 340px; height: 340px;
+  background: #a78bfa;
+  top: -60px; right: 5%;
+  animation: blob2 11s ease-in-out infinite alternate;
+}
+.blob-3 {
+  width: 280px; height: 280px;
+  background: #3b1fa8;
+  bottom: -80px; left: 30%;
+  animation: blob3 8s ease-in-out infinite alternate;
+}
+.blob-4 {
+  width: 200px; height: 200px;
+  background: #ec4899;
+  bottom: -40px; right: 15%;
+  opacity: 0.3;
+  animation: blob4 13s ease-in-out infinite alternate;
+}
+@keyframes blob1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, 30px) scale(1.15); }
+}
+@keyframes blob2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-30px, 40px) scale(0.9); }
+}
+@keyframes blob3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, -20px) scale(1.2); }
+}
+@keyframes blob4 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-40px, -30px) scale(1.1); }
+}
