@@ -1,6 +1,6 @@
 'use client';
 
-import { FileText, Clock } from 'lucide-react';
+import { FileText, Clock, Mail, MessageCircle } from 'lucide-react';
 import { PageHeader } from '@/components/page-header';
 import NPSOverview from '@/components/nps/nps-overview';
 import NPSTrendChart from '@/components/nps/nps-trend-chart';
@@ -41,6 +41,30 @@ export default function NPSPage() {
           <NPSIssues />
           <NPSActionTracker />
           <NPSKeyInsights />
+
+          {/* Contact / Feedback */}
+          <div className="rounded-xl border border-border bg-muted/30 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-[13px] font-semibold text-card-foreground">Have feedback or questions about this data?</p>
+              <p className="text-[12px] text-muted-foreground mt-0.5">Reach out to Kanya Hadyani — Product Research</p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href="mailto:ratnakanya.hadyani@amartha.com"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-[12px] font-medium border border-border bg-card text-card-foreground hover:bg-muted/50 transition-colors"
+              >
+                <Mail className="h-3.5 w-3.5 shrink-0" />
+                Email
+              </a>
+              <a
+                href="slack://user?username=kanya.hadyani"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-[12px] font-medium border border-border bg-card text-card-foreground hover:bg-muted/50 transition-colors"
+              >
+                <MessageCircle className="h-3.5 w-3.5 shrink-0" />
+                Slack — Kanya Hadyani
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </main>
