@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { FilePlus, ChevronLeft, ChevronRight, BarChart2 } from "lucide-react"
+import { FilePlus, ChevronLeft, ChevronRight, BarChart2, TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter, usePathname } from "next/navigation"
 
@@ -13,6 +13,7 @@ export function AppSidebar() {
 
   const isSurveysActive = pathname.startsWith("/surveys")
   const isInsightsActive = pathname.startsWith("/insights")
+  const isNPSActive = pathname.startsWith("/nps")
 
   return (
     <aside 
@@ -62,20 +63,27 @@ export function AppSidebar() {
 
         {/* Navigation */}
         <nav className="flex flex-col gap-2 px-4 items-center">
-        <SidebarItem 
-            icon={BarChart2} 
-            label="CSAT Insights" 
+          <SidebarItem
+            icon={BarChart2}
+            label="CSAT Insights"
             active={isInsightsActive}
             isCollapsed={isCollapsed}
             onClick={() => router.push("/insights")}
           />
-          <SidebarItem 
-            icon={FilePlus} 
-            label="CSAT Survey" 
+          <SidebarItem
+            icon={TrendingUp}
+            label="NPS Dashboard"
+            active={isNPSActive}
+            isCollapsed={isCollapsed}
+            onClick={() => router.push("/nps")}
+          />
+          <SidebarItem
+            icon={FilePlus}
+            label="CSAT Survey"
             active={isSurveysActive}
             isCollapsed={isCollapsed}
             onClick={() => router.push("/surveys")}
-          />   
+          />
         </nav>
       </div>
     </aside>
