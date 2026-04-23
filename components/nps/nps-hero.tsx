@@ -1,12 +1,14 @@
+import styles from './nps-hero.module.css';
+
 export default function NPSHero() {
   return (
     <div className="relative rounded-2xl overflow-hidden bg-[#0f0b2a] px-8 py-10">
       {/* Animated blobs */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="blob blob-1" />
-        <div className="blob blob-2" />
-        <div className="blob blob-3" />
-        <div className="blob blob-4" />
+        <div className={`${styles.blob} ${styles.blob1}`} />
+        <div className={`${styles.blob} ${styles.blob2}`} />
+        <div className={`${styles.blob} ${styles.blob3}`} />
+        <div className={`${styles.blob} ${styles.blob4}`} />
       </div>
 
       {/* Noise texture overlay */}
