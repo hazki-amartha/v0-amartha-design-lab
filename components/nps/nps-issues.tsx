@@ -182,7 +182,7 @@ export default function NPSIssues() {
         ) : (
           <div className="rounded-xl border border-border overflow-hidden">
             {/* Column headers */}
-            <div className="grid grid-cols-[16px_1fr_150px_120px_56px] bg-muted/50 border-b border-border px-5 py-3">
+            <div className="grid grid-cols-[16px_1fr_180px_120px_56px] bg-muted/50 border-b border-border px-5 py-3">
               <span />
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Issue</span>
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Product · Journey</span>
@@ -203,7 +203,7 @@ export default function NPSIssues() {
                 return (
                   <div
                     key={`${issue.product}-${issue.journey}-${idx}`}
-                    className="grid grid-cols-[16px_1fr_150px_120px_56px] items-center px-5 py-4 border-b border-border last:border-0 transition-colors hover:bg-muted/20 bg-card"
+                    className="grid grid-cols-[16px_1fr_180px_120px_56px] items-center px-5 py-4 border-b border-border last:border-0 transition-colors hover:bg-muted/20 bg-card"
                   >
                     {/* Severity dot */}
                     <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', impactDot)} />
