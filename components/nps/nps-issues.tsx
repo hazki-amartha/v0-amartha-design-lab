@@ -192,7 +192,7 @@ export default function NPSIssues() {
             </div>
 
             {/* Rows — scrollable past 12 items */}
-            <div className={cn(filtered.length > 12 ? 'max-h-[520px] overflow-y-auto' : '')}>
+            <div className={cn(filtered.length > 6 ? 'max-h-[360px] overflow-y-auto' : '')}>
               {filtered.map((issue, idx) => {
                 const impactDot = IMPACT_CONFIG[issue.impact].bar;
                 const tagColor = TAG_COLORS[issue.tag] ?? 'bg-muted text-muted-foreground border-border';
