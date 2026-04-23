@@ -182,10 +182,11 @@ export default function NPSIssues() {
         ) : (
           <div className="rounded-xl border border-border overflow-hidden">
             {/* Column headers */}
-            <div className="grid grid-cols-[16px_1fr_180px_120px_56px] bg-muted/50 border-b border-border px-5 py-3">
+            <div className="grid grid-cols-[16px_1fr_90px_130px_120px_56px] bg-muted/50 border-b border-border px-5 py-3">
               <span />
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Issue</span>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Product · Journey</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Product</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Journey</span>
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Tag</span>
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground text-right">%</span>
             </div>
@@ -203,7 +204,7 @@ export default function NPSIssues() {
                 return (
                   <div
                     key={`${issue.product}-${issue.journey}-${idx}`}
-                    className="grid grid-cols-[16px_1fr_180px_120px_56px] items-center px-5 py-4 border-b border-border last:border-0 transition-colors hover:bg-muted/20 bg-card"
+                    className="grid grid-cols-[16px_1fr_90px_130px_120px_56px] items-center px-5 py-4 border-b border-border last:border-0 transition-colors hover:bg-muted/20 bg-card"
                   >
                     {/* Severity dot */}
                     <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', impactDot)} />
@@ -213,10 +214,13 @@ export default function NPSIssues() {
                       {issue.issue}
                     </p>
 
-                    {/* Product · Journey */}
+                    {/* Product */}
+                    <p className="text-[11px] font-medium text-card-foreground/70 pr-4">
+                      {issue.product}
+                    </p>
+
+                    {/* Journey */}
                     <p className="text-[11px] text-muted-foreground pr-4">
-                      <span className="font-medium text-card-foreground/70">{issue.product}</span>
-                      <span className="mx-1 text-muted-foreground/40">·</span>
                       {issue.journey}
                     </p>
 
