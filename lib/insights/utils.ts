@@ -1,18 +1,18 @@
 import { CSATRow, BUScorecard, FeatureDetail, FeedbackItem, FeatureScore } from './types';
 
 export function generateCSVTemplate(): string {
-  const headers = ['OS', 'trigger_event', 'business_unit', 'csat_category', 'detailed_feedback', 'csat_label', 'app_segments', 'Occurrences'];
+  const headers = ['OS', 'trigger_event', 'business_unit', 'product_area', 'csat_category', 'detailed_feedback', 'csat_label', 'app_segments', 'Occurrences'];
   const exampleRows = [
-    ['Android', 'CSAT Kirim Uang', 'Payments', 'delighted', 'Biaya transfer gratis, uang langsung masuk', 'Sangat puas', 'afin_active_borrowers', '1'],
-    ['iOS', 'CSAT Top-up Poket', 'Payments', 'satisfied', 'Proses transfer cepat', 'Puas', 'afin_promo_landing_page_rollout', '5'],
-    ['Android', 'CSAT Create Majelis', 'Lending', 'dissatisfied', 'Proses pembuatan majelis terlalu rumit', 'Tidak puas', 'afin_active_borrowers', '2'],
+    ['Android', 'CSAT Kirim Uang', 'Payments', 'PPOB', 'delighted', 'Biaya transfer gratis uang langsung masuk', 'Sangat puas', 'afin_active_borrowers', '1'],
+    ['iOS', 'CSAT Top-up Poket', 'Payments', 'PPOB', 'satisfied', 'Proses transfer cepat', 'Puas', 'afin_promo_landing_page_rollout', '5'],
+    ['Android', 'CSAT Create Majelis', 'Lending', 'Modal', 'dissatisfied', 'Proses pembuatan majelis terlalu rumit', 'Tidak puas', 'afin_active_borrowers', '2'],
   ];
-  
+
   const csvContent = [
     headers.join(','),
     ...exampleRows.map(row => row.join(',')),
   ].join('\n');
-  
+
   return csvContent;
 }
 
@@ -53,15 +53,17 @@ export function parseCSV(text: string): CSATRow[] {
     const values = line.split(',').map(v => v.trim());
     
     // Use header mapping to extract values flexibly
+    // product_area is optional — empty string for older CSVs without this column
     const row: CSATRow = {
-      OS: values[headerIndices['os'] || 0] || '',
-      trigger_event: values[headerIndices['trigger_event'] || 1] || '',
-      business_unit: values[headerIndices['business_unit'] || 2] || '',
-      csat_category: values[headerIndices['csat_category'] || 3] || '',
-      detailed_feedback: values[headerIndices['detailed_feedback'] || 4] || '',
-      csat_label: values[headerIndices['csat_label'] || 5] || '',
-      app_segments: values[headerIndices['app_segments'] || 6] || '',
-      Occurrences: parseInt(values[headerIndices['occurrences'] || 7] || '1', 10),
+      OS: values[headerIndices['os'] ?? 0] || '',
+      trigger_event: values[headerIndices['trigger_event'] ?? 1] || '',
+      business_unit: values[headerIndices['business_unit'] ?? 2] || '',
+      product_area: headerIndices['product_area'] !== undefined ? values[headerIndices['product_area']] || '' : '',
+      csat_category: values[headerIndices['csat_category'] ?? 3] || '',
+      detailed_feedback: values[headerIndices['detailed_feedback'] ?? 4] || '',
+      csat_label: values[headerIndices['csat_label'] ?? 5] || '',
+      app_segments: values[headerIndices['app_segments'] ?? 6] || '',
+      Occurrences: parseInt(values[headerIndices['occurrences'] ?? 7] || '1', 10),
     };
     rows.push(row);
   }
@@ -121,6 +123,7 @@ export function aggregateByFeature(
       pain_points: Map<string, number>;
       positive: Map<string, number>;
       business_unit: string;
+      product_area: string;
     }
   >();
 
@@ -133,6 +136,7 @@ export function aggregateByFeature(
         pain_points: new Map(),
         positive: new Map(),
         business_unit: row.business_unit || 'Unknown',
+        product_area: row.product_area || '',
       });
     }
 
@@ -164,6 +168,7 @@ export function aggregateByFeature(
       return {
         feature_name,
         business_unit: data.business_unit,
+        product_area: data.product_area,
         score: {
           delighted: Math.round((data.scores.delighted / total) * 100),
           satisfied: Math.round((data.scores.satisfied / total) * 100),

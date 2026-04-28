@@ -1,10 +1,13 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex bg-background">
+    <SidebarProvider>
       <AppSidebar />
-      {children}
-    </div>
+      <SidebarInset className="bg-card">
+        {children}
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

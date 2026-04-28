@@ -116,8 +116,8 @@ function EditorContent() {
   }
 
   return (
-    <main className="flex flex-row p-3 gap-3 pl-0 h-screen w-full overflow-hidden">
-      <div className="flex flex-col w-full">
+    <main className="flex flex-row gap-0 pl-0 h-screen w-full overflow-hidden">
+      <div className="flex flex-col border-r border-border w-full">
         <PageHeader
           title={surveyId ? "Edit Survey" : "New Survey"}
           onBack={() => router.push("/surveys")}
@@ -148,7 +148,7 @@ function EditorContent() {
         </div>
       </div>
       <div>
-        <div className="w-[320px] shrink-0 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="w-[320px] shrink-0 overflow-y-auto rounded-lg m-4 border border-border" style={{ scrollbarWidth: "none" }}>
           <SurveyPreview html={html} />
         </div>
       </div>

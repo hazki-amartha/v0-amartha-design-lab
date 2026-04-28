@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FeatureDetail, FeedbackItem } from '@/lib/insights/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { X, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface FeatureDetailDrawerProps {
@@ -71,18 +72,44 @@ export default function FeatureDetailDrawer({
   feature,
   onClose,
 }: FeatureDetailDrawerProps) {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const r1 = requestAnimationFrame(() => {
+      const r2 = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(r2);
+    });
+    return () => cancelAnimationFrame(r1);
+  }, []);
+
+  function handleClose() {
+    setVisible(false);
+    setTimeout(onClose, 280);
+  }
+
   return (
     <>
-      <div className="fixed inset-0 bg-black/50 h-full z-40" onClick={onClose} />
+      <div
+        className={cn(
+          'fixed inset-0 bg-black/50 h-full z-40 transition-opacity duration-[280ms]',
+          visible ? 'opacity-100' : 'opacity-0'
+        )}
+        onClick={handleClose}
+      />
 
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-card border-l border-border shadow-lg z-50 overflow-y-auto">
+      <div
+        className={cn(
+          'fixed right-0 top-0 h-full w-full max-w-md bg-card border-l border-border shadow-lg z-50 overflow-y-auto transition-transform duration-[280ms] ease-out',
+          visible ? 'translate-x-0' : 'translate-x-full'
+        )}
+      >
         {/* Header */}
         <div className="sticky top-0 bg-card border-b border-border px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <h2 className="font-semibold text-sm">{feature.feature_name}</h2>
             <Badge variant="secondary">{feature.business_unit}</Badge>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8 p-4 rounded-sm hover:bg-secondary hover:text-primary transition-colors">
+          <Button variant="ghost" size="icon" onClick={handleClose} className="h-8 w-8 p-4 rounded-sm hover:bg-secondary hover:text-primary transition-colors">
             <X className="w-5 h-5" />
           </Button>
         </div>

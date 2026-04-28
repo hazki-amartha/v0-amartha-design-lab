@@ -25,7 +25,7 @@ export default function DataManagementPage() {
   }
 
   return (
-    <main className="flex-1 flex flex-col p-3 pl-0 h-screen overflow-hidden">
+    <main className="flex-1 flex flex-col h-screen overflow-hidden">
       <PageHeader
         title="Manage Data"
         onBack={() => router.push('/insights')}

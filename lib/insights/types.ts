@@ -5,6 +5,7 @@ export interface CSATRow {
   csat_label: string;
   trigger_event: string;
   business_unit: string;
+  product_area: string;     // Modal | GGS | Celengan | PPOB — optional in CSV, empty string if absent
   app_segments: string;
   Occurrences: number;
 }
@@ -40,6 +41,7 @@ export interface FeatureScore {
 export interface FeatureDetail {
   feature_name: string;
   business_unit: string;
+  product_area: string;
   score: FeatureScore;
   total_responses: number;
   pain_points: FeedbackItem[];

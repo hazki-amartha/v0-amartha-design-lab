@@ -1,14 +1,7 @@
 import { CSATRow, CSATDataRecord, MonthData } from './types';
-import {
-  localUpload,
-  localListMonths,
-  localGetMonth,
-  localDeleteMonth,
-} from './local-store';
-
-const isLocal =
-  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+import { aggregateByFeature } from './utils';
+import { csatFeedbackItemToIssue } from '@/lib/issues/types';
+import { upsertIssuesForPeriod } from '@/lib/issues/supabase';
 
 async function getSupabase() {
   const { supabase } = await import('@/lib/supabase');
@@ -20,8 +13,6 @@ export async function uploadCSVData(
   filename: string,
   rows: CSATRow[]
 ): Promise<CSATDataRecord> {
-  if (isLocal) return localUpload(month, filename, rows);
-
   const supabase = await getSupabase();
 
   // Delete existing record for this month first (upsert pattern)
@@ -40,12 +31,18 @@ export async function uploadCSVData(
     .single();
 
   if (error) throw new Error(`Failed to upload CSAT data: ${error.message}`);
+
+  // Derive pain-point issues and persist to the canonical issues table
+  const features = aggregateByFeature(rows);
+  const issues = features.flatMap(feature =>
+    feature.pain_points.map(item => csatFeedbackItemToIssue(item, feature, month))
+  );
+  await upsertIssuesForPeriod('csat', month, issues);
+
   return data as CSATDataRecord;
 }
 
 export async function listAllMonths(): Promise<MonthData[]> {
-  if (isLocal) return localListMonths();
-
   const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('csat_data')
@@ -62,8 +59,6 @@ export async function listAllMonths(): Promise<MonthData[]> {
 }
 
 export async function getMonthData(month: string): Promise<CSATDataRecord | null> {
-  if (isLocal) return localGetMonth(month);
-
   const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('csat_data')
@@ -77,9 +72,11 @@ export async function getMonthData(month: string): Promise<CSATDataRecord | null
 }
 
 export async function deleteMonthData(month: string): Promise<void> {
-  if (isLocal) return localDeleteMonth(month);
-
   const supabase = await getSupabase();
+
+  // Remove derived issues first, then the raw data
+  await supabase.from('issues').delete().match({ source: 'csat', period: month });
+
   const { error } = await supabase
     .from('csat_data')
     .delete()

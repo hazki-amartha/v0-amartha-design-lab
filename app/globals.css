@@ -17,14 +17,14 @@
   --secondary-foreground: #111111;
   --muted: #F2F3F7;
   --muted-foreground: #71717A;
-  --accent: #6c5ae4;
+  --accent: #9747FF;
   --accent-foreground: #FFFFFF;
   --destructive: #EF4444;
   --destructive-foreground: #EF4444;
   --border: #E8E9EF;
   --input: #E4E4E7;
-  --ring: #7C6BF0;
-  --chart-1: #7C6BF0;
+  --ring: #9747FF;
+  --chart-1: #9747FF;
   --chart-2: #60A5FA;
   --chart-3: #34D399;
   --chart-4: #FBBF24;
@@ -94,5 +94,16 @@
     font-weight: 700;
     color: var(--foreground);
   }
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
