@@ -4,7 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart3, ClipboardList, Star, FileText } from "lucide-react"
+import { BarChart3, SquareKanban, ChartPie, FileText, Library } from "lucide-react"
 
 import {
   Sidebar,
@@ -21,14 +21,15 @@ const nav = [
   {
     group: "Voice of Customer",
     items: [
-      { title: "NPS", url: "/nps", icon: Star },
+      { title: "NPS", url: "/nps", icon: ChartPie },
       { title: "CSAT", url: "/insights", icon: BarChart3 },
+      { title: "Insight Library", url: "/insight-library", icon: Library },
     ],
   },
   {
     group: "Workspace",
     items: [
-      { title: "Action Tracker", url: "/action-tracker", icon: ClipboardList },
+      { title: "Action Tracker", url: "/action-tracker", icon: SquareKanban },
       { title: "Survey Builder", url: "/surveys", icon: FileText },
     ],
   },

@@ -106,7 +106,7 @@ function EditorContent() {
 
   if (!paramsLoaded || loading) {
     return (
-      <main className="flex-1 flex items-center justify-center min-h-screen">
+      <main className="flex h-full flex-1 items-center justify-center">
         <div className="flex flex-col items-center gap-2">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
           <p className="text-sm text-muted-foreground">Loading survey editor...</p>
@@ -116,8 +116,8 @@ function EditorContent() {
   }
 
   return (
-    <main className="flex flex-row gap-0 pl-0 h-screen w-full overflow-hidden">
-      <div className="flex flex-col border-r border-border w-full">
+    <main className="flex h-full min-h-0 w-full flex-row gap-0 overflow-hidden pl-0">
+      <div className="flex min-h-0 w-full flex-col border-r border-border">
         <PageHeader
           title={surveyId ? "Edit Survey" : "New Survey"}
           onBack={() => router.push("/surveys")}
@@ -136,7 +136,7 @@ function EditorContent() {
         />
 
         {/* Scrollable content area */}
-        <div className="flex gap-2 flex-1 overflow-hidden">
+        <div className="flex min-h-0 flex-1 gap-2 overflow-hidden">
           <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
             <SurveyForm
               config={config}
@@ -159,7 +159,7 @@ function EditorContent() {
 export default function EditorPage() {
   return (
     <Suspense fallback={
-      <main className="flex-1 flex items-center justify-center min-h-screen">
+      <main className="flex h-full flex-1 items-center justify-center">
         <p className="text-muted-foreground animate-pulse">Initializing...</p>
       </main>
     }>

@@ -312,7 +312,6 @@ export default function NPSActionTracker() {
         <div className="grid grid-cols-3 gap-4">
           {SECTIONS.map(section => (
             <div key={section.key} className="bg-muted/30 rounded-xl border border-border overflow-hidden">
-              <div className={cn('h-1 w-full', section.topBar)} />
               <div className="px-5 py-4 space-y-3">
                 {[1, 2].map(i => (
                   <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
